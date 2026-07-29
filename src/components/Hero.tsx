@@ -35,7 +35,7 @@ export function Hero() {
             Kupi odmah
           </a>
           <a
-            href="#proizvodi"
+            href="/proizvodi/smart-curtain-robot"
             className="rounded-full border border-border px-8 py-3.5 text-base font-medium text-text transition-all hover:scale-[1.03] hover:bg-bg-alt"
           >
             Pogledaj proizvod
