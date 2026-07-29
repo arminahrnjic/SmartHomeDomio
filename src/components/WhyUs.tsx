@@ -35,7 +35,7 @@ const REASONS = [
 
 export function WhyUs() {
   return (
-    <section id="o-nama" className="w-full bg-bg px-6 py-24">
+    <section id="zasto-mi" className="w-full bg-bg px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-14 max-w-xl text-center">
           <h2 className="text-[clamp(1.8rem,3vw,2.8rem)] font-bold tracking-tight text-text">

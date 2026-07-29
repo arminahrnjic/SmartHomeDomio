@@ -213,7 +213,11 @@ Smart Door Sensor, Motion Sensor, Temperature & Humidity Sensor — svi dostupni
 - Prodajemo **mir u glavi i sigurnost**, ne uređaje. Svaki opis proizvoda treba da odgovori "koji svakodnevni problem ovo rješava" prije nego što nabroji specifikacije.
 - Kratke rečenice. Bez žargona.
 - CTA dugmad: "Kupi odmah", "Pogledaj proizvod" — ne "Naruči sada!!!" ili slično agresivno.
-- Lični brend ton na društvenim mrežama (Armina kao stručnjak, ne bezlična firma) — ovo se ne odnosi direktno na webshop kod, ali copy na "O nama" stranici treba to odražavati.
+- **Topao/ličan ton, ali BEZ identiteta osnivača.** Brend zvuči kao pravi tim, ne bezlična korporacija — ali se nigdje (webshop copy, blog, društvene mreže, "O nama" stranica) ne koristi stvarno ime, lik ili identitet osnivača. Konkretno:
+  - Nema prvog lica jednine ("Ja sam...", "Testirala sam...") — uvijek plural/generično ("mi", "tim").
+  - Nema imena osnivača ni bilo koje reference koja bi otkrila ko konkretno stoji iza brenda.
+  - Umjesto toga koristiti formulacije tipa: "Iza `BRAND_NAME` stoji tim koji lično testira svaki uređaj prije nego što ga preporuči."
+  - Ovo pravilo važi za sav budući copy i marketing sadržaj, ne samo za "O nama" stranicu.
 
 ---
 

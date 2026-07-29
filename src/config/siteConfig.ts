@@ -11,4 +11,9 @@ export const siteConfig = {
   contact: {
     email: "info@example.com",
   },
+  // Placeholder linkovi — zamijeniti stvarnim nalozima kad budu otvoreni.
+  social: {
+    instagram: "#",
+    tiktok: "#",
+  },
 };
