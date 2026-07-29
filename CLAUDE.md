@@ -1,3 +1,5 @@
+@AGENTS.md
+
 # [NAZIV BRENDA — TBD] — Smart Home Webshop
 
 > Napomena: ime firme se mijenja (nije više "Hotellar" — nema asocijacije na hotele).
