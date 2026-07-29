@@ -2,6 +2,7 @@ import { Hero } from "@/components/Hero";
 import { WhyUs } from "@/components/WhyUs";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { HowItWorks } from "@/components/HowItWorks";
+import { VideoSection } from "@/components/VideoSection";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <WhyUs />
       <FeaturedProducts />
       <HowItWorks />
+      <VideoSection />
     </main>
   );
 }
