@@ -4,6 +4,7 @@ import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { HowItWorks } from "@/components/HowItWorks";
 import { VideoSection } from "@/components/VideoSection";
 import { Reviews } from "@/components/Reviews";
+import { BlogPreview } from "@/components/BlogPreview";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <HowItWorks />
       <VideoSection />
       <Reviews />
+      <BlogPreview />
     </main>
   );
 }
