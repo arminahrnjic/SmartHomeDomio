@@ -1,0 +1,65 @@
+[
+  {
+    "id": "smart-curtain-robot",
+    "name": "Smart Curtain Robot",
+    "tagline": "Automatski otvarajte i zatvarajte zavjese",
+    "badge": "BESTSELLER",
+    "short_description": "Pretvorite obične zavjese u pametne. Radi na Roman rod i track rod šinama.",
+    "features": [
+      "Mobilna aplikacija i glasovna kontrola (Alexa, Google Home) — WiFi varijanta",
+      "Tiho otvaranje, brzina 10 sec/metar",
+      "Baterija do 6 mjeseci rada, odvojiva, Type-C punjenje",
+      "Kompatibilan s većinom šina"
+    ],
+    "variant_groups": [
+      {
+        "id": "control",
+        "label": "Način kontrole",
+        "default": "wifi",
+        "options": [
+          {
+            "id": "wifi",
+            "label": "Puna kontrola (App + Glas)",
+            "sublabel": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
+            "price_km": 179,
+            "recommended": true
+          },
+          {
+            "id": "remote",
+            "label": "Osnovna kontrola (Daljinski)",
+            "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
+            "price_km": 139,
+            "recommended": false
+          }
+        ]
+      },
+      {
+        "id": "size",
+        "label": "Veličina",
+        "default": "single",
+        "options": [
+          { "id": "single", "label": "Single — jedna zavjesa", "price_modifier_km": 0 },
+          { "id": "double", "label": "Double — dvokrilne zavjese / širi prozor", "price_modifier_km": 45 }
+        ]
+      }
+    ],
+    "addons": [
+      {
+        "id": "solar-panel",
+        "label": "Solarni punjač",
+        "description": "Automatsko punjenje robota preko sunca — nikad ne brinete o bateriji.",
+        "price_km": 19,
+        "default_checked": false
+      }
+    ],
+    "specs": {
+      "power_wifi": "12W (Double) / 4W (Single)",
+      "battery": "4000mAh, odvojiva, punjenje Type-C",
+      "max_stroke": "20m",
+      "app": "Tuya / Smart Life"
+    },
+    "images": ["/products/curtain-robot/1.jpg"],
+    "status": "preorder",
+    "preorder_note": "Sljedeća grupa narudžbi zatvara se uskoro. Isporuka 10-15 dana nakon slanja iz fabrike."
+  }
+]
