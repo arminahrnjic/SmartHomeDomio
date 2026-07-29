@@ -4,6 +4,7 @@ import "./globals.css";
 import { siteConfig } from "@/config/siteConfig";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,6 +28,7 @@ export default function RootLayout({
         <AnnouncementBar />
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
