@@ -29,7 +29,7 @@ export function Hero() {
 
         <div className="mt-4 flex flex-col gap-4 sm:flex-row">
           <a
-            href="#proizvodi"
+            href="/proizvodi"
             className="rounded-full bg-primary px-8 py-3.5 text-base font-medium text-white transition-all hover:scale-[1.03] hover:bg-primary-hover"
           >
             Kupi odmah

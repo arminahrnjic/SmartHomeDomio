@@ -11,7 +11,7 @@ const COLUMNS = [
   },
   {
     title: "Proizvodi",
-    links: [{ href: "#proizvodi", label: "Svi proizvodi" }],
+    links: [{ href: "/proizvodi", label: "Svi proizvodi" }],
   },
 ];
 
