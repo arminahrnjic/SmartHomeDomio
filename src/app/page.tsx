@@ -5,6 +5,7 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { VideoSection } from "@/components/VideoSection";
 import { Reviews } from "@/components/Reviews";
 import { BlogPreview } from "@/components/BlogPreview";
+import { Newsletter } from "@/components/Newsletter";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <VideoSection />
       <Reviews />
       <BlogPreview />
+      <Newsletter />
     </main>
   );
 }
