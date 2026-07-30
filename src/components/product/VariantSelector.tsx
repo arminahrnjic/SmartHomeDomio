@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import type { Product } from "@/types/product";
+import { submitToSheet } from "@/lib/submitToSheet";
+import { siteConfig } from "@/config/siteConfig";
 
 export function VariantSelector({ product }: { product: Product }) {
   const controlGroup = product.variant_groups.find((group) => group.id === "control");
@@ -12,7 +14,8 @@ export function VariantSelector({ product }: { product: Product }) {
   const [addonChecked, setAddonChecked] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(product.addons.map((addon) => [addon.id, addon.default_checked]))
   );
-  const [ordered, setOrdered] = useState(false);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const selectedControl = controlGroup?.options.find((option) => option.id === controlId);
   const selectedSize = sizeGroup?.options.find((option) => option.id === sizeId);
@@ -135,18 +138,62 @@ export function VariantSelector({ product }: { product: Product }) {
           <span className="text-3xl font-bold tracking-tight text-text">{totalPrice} KM</span>
         </div>
 
-        {ordered ? (
+        {status === "success" ? (
           <p className="rounded-xl bg-bg-alt px-5 py-4 text-sm font-medium text-text">
-            Hvala! Vaš preorder je zabilježen — javićemo vam se uskoro.
+            Hvala! Vaš preorder je zabilježen — javićemo vam se na {email} uskoro.
           </p>
         ) : (
-          <button
-            type="button"
-            onClick={() => setOrdered(true)}
-            className="w-full rounded-full bg-primary px-8 py-3.5 text-base font-medium text-white transition-all hover:scale-[1.01] hover:bg-primary-hover"
+          <form
+            onSubmit={async (event) => {
+              event.preventDefault();
+              setStatus("loading");
+              try {
+                await submitToSheet({
+                  type: "preorder",
+                  product: product.name,
+                  control: selectedControl?.label ?? "",
+                  size: selectedSize?.label ?? "",
+                  addons: product.addons
+                    .filter((addon) => addonChecked[addon.id])
+                    .map((addon) => addon.label)
+                    .join(", "),
+                  total: totalPrice,
+                  email,
+                });
+                setStatus("success");
+              } catch {
+                setStatus("error");
+              }
+            }}
+            className="flex flex-col gap-3"
           >
-            Naruči odmah (Preorder)
-          </button>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="Vaš email (za potvrdu preordera)"
+              aria-label="Email adresa"
+              className="w-full rounded-full border border-border bg-bg px-5 py-3.5 text-base text-text outline-none placeholder:text-text-muted"
+            />
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="w-full rounded-full bg-primary px-8 py-3.5 text-base font-medium text-white transition-all hover:scale-[1.01] hover:bg-primary-hover disabled:opacity-70"
+            >
+              {status === "loading" ? "Šaljem..." : "Naruči odmah (Preorder)"}
+            </button>
+          </form>
+        )}
+
+        {status === "error" && (
+          <p className="text-sm text-text-muted">
+            Nešto nije uspjelo. Pokušajte ponovo ili nam pišite direktno na{" "}
+            <a href={`mailto:${siteConfig.contact.email}`} className="underline">
+              {siteConfig.contact.email}
+            </a>
+            .
+          </p>
         )}
 
         {product.preorder_note && (

@@ -1,9 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { submitToSheet } from "@/lib/submitToSheet";
+import { siteConfig } from "@/config/siteConfig";
 
 export function Newsletter() {
-  const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    setStatus("loading");
+    try {
+      await submitToSheet({ type: "newsletter", email });
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  }
 
   return (
     <section className="w-full bg-primary px-6 py-24">
@@ -15,30 +29,37 @@ export function Newsletter() {
           Prijavite se za novosti o proizvodima i preorder ponudama.
         </p>
 
-        {submitted ? (
+        {status === "success" ? (
           <p className="text-base font-medium text-white">Hvala na prijavi!</p>
         ) : (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setSubmitted(true);
-            }}
-            className="flex w-full flex-col gap-3 sm:flex-row"
-          >
+          <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3 sm:flex-row">
             <input
               type="email"
               required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               placeholder="Vaš email"
               aria-label="Email adresa"
               className="w-full rounded-full border-0 bg-white px-5 py-3.5 text-base text-text outline-none placeholder:text-text-muted"
             />
             <button
               type="submit"
-              className="rounded-full bg-text px-8 py-3.5 text-base font-medium text-white transition-transform hover:scale-[1.03]"
+              disabled={status === "loading"}
+              className="rounded-full bg-text px-8 py-3.5 text-base font-medium text-white transition-transform hover:scale-[1.03] disabled:opacity-70"
             >
-              Prijavi se
+              {status === "loading" ? "Šaljem..." : "Prijavi se"}
             </button>
           </form>
+        )}
+
+        {status === "error" && (
+          <p className="text-sm text-white/90">
+            Nešto nije uspjelo. Pokušajte ponovo ili nam pišite direktno na{" "}
+            <a href={`mailto:${siteConfig.contact.email}`} className="underline">
+              {siteConfig.contact.email}
+            </a>
+            .
+          </p>
         )}
       </div>
     </section>
