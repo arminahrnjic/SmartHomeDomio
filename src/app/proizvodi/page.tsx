@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import products from "@data/products.json";
 import type { Product } from "@/types/product";
 import { ProductCard } from "@/components/product/ProductCard";
-import { siteConfig } from "@/config/siteConfig";
 
 const ALL_PRODUCTS = products as Product[];
 
 export const metadata: Metadata = {
-  title: `Proizvodi — ${siteConfig.name}`,
-  description: "Svi proizvodi u ponudi.",
+  title: "Proizvodi",
+  description: "Svi proizvodi u ponudi — pametni uređaji za dom, dostupni za preorder.",
 };
 
 export default function ProizvodiPage() {

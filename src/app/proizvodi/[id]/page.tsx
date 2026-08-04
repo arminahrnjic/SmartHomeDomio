@@ -6,6 +6,7 @@ import products from "@data/products.json";
 import type { Product } from "@/types/product";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { VariantSelector } from "@/components/product/VariantSelector";
+import { siteConfig } from "@/config/siteConfig";
 
 const ALL_PRODUCTS = products as Product[];
 
@@ -29,9 +30,28 @@ export async function generateMetadata({
   const { id } = await params;
   const product = getProduct(id);
   if (!product) return {};
+
+  const images = getExistingImages(product.images);
+  // Nema pravih fotografija za ovaj proizvod jos -> koristi generisanu brend OG sliku sa root nivoa.
+  const ogImages = images.length > 0 ? images : ["/opengraph-image"];
+
   return {
     title: product.name,
     description: product.short_description,
+    openGraph: {
+      type: "website",
+      locale: "bs_BA",
+      siteName: siteConfig.name,
+      title: product.name,
+      description: product.short_description,
+      images: ogImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: product.short_description,
+      images: ogImages,
+    },
   };
 }
 

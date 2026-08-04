@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { siteConfig, BRAND_NAME } from "@/config/siteConfig";
 
 export const metadata: Metadata = {
-  title: `O nama — ${siteConfig.name}`,
-  description: "Zašto postojimo i šta nas pokreće.",
+  title: "O nama",
+  description:
+    "Zašto postojimo i šta nas pokreće — tim koji lično testira svaki uređaj prije nego što ga preporuči.",
 };
 
 export default function ONamaPage() {
