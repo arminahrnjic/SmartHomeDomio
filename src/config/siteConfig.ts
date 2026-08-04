@@ -1,6 +1,4 @@
-// Ime brenda još nije odlučeno (vidi CLAUDE.md).
-// Kad se odluči finalno ime, promijeni ga samo ovdje.
-export const BRAND_NAME = "BRAND_NAME";
+export const BRAND_NAME = "Domio";
 
 // Dok sajt nije deployan na pravu domenu, ovo ostaje placeholder.
 // Kad se poveže Vercel (vidi SETUP.md), postaviti NEXT_PUBLIC_SITE_URL na pravi URL.

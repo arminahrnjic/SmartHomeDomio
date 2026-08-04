@@ -5,7 +5,7 @@ const COLUMNS = [
     title: "Kompanija",
     links: [
       { href: "/o-nama", label: "O nama" },
-      { href: "#blog", label: "Blog" },
+      { href: "/#blog", label: "Blog" },
       { href: "#kontakt", label: "Kontakt" },
     ],
   },

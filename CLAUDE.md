@@ -1,9 +1,8 @@
 @AGENTS.md
 
-# [NAZIV BRENDA — TBD] — Smart Home Webshop
+# Domio — Smart Home Webshop
 
-> Napomena: ime firme se mijenja (nije više "Hotellar" — nema asocijacije na hotele).
-> Dok se ne odluči finalno ime, u kodu koristi placeholder `BRAND_NAME` (varijabla/konstanta na jednom mjestu, npr. `config.js` ili `siteConfig.ts`) tako da se promjena imena kasnije uradi na jednom mjestu, ne po cijelom sajtu.
+> Ime brenda je odlučeno: **Domio** (dom + lakoća/kontrola). Definisano u `src/config/siteConfig.ts` (`BRAND_NAME`) — mijenjati samo tamo, ne po cijelom sajtu.
 
 ## O projektu
 
