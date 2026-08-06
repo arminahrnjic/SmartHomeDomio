@@ -1,11 +1,17 @@
+export interface SheetOrderItem {
+  product: string;
+  variants: string;
+  addons: string;
+  quantity: number;
+  unitPrice: number;
+  lineTotal: number;
+}
+
 export type SheetPayload =
   | { type: "newsletter"; email: string }
   | {
-      type: "preorder";
-      product: string;
-      control: string;
-      size: string;
-      addons: string;
+      type: "order";
+      items: SheetOrderItem[];
       total: number;
       email: string;
     };

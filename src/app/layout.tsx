@@ -5,6 +5,8 @@ import { siteConfig } from "@/config/siteConfig";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { CartProvider } from "@/context/CartContext";
+import { CartDrawer } from "@/components/cart/CartDrawer";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -41,10 +43,13 @@ export default function RootLayout({
   return (
     <html lang="bs" className={`${poppins.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
-        <AnnouncementBar />
-        <Header />
-        {children}
-        <Footer />
+        <CartProvider>
+          <AnnouncementBar />
+          <Header />
+          {children}
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

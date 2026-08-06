@@ -29,7 +29,8 @@
             "label": "Osnovna kontrola (Daljinski)",
             "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
             "price_km": 139,
-            "recommended": false
+            "recommended": false,
+            "downgrade_note": "Bez mogućnosti kontrole na daljinu preko telefona"
           }
         ]
       },

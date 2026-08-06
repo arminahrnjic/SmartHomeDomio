@@ -98,7 +98,7 @@ export default async function ProductPage({
               ))}
             </ul>
 
-            <VariantSelector product={product} />
+            <VariantSelector product={product} image={images[0]} />
           </div>
         </div>
       </section>

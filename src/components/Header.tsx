@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/siteConfig";
+import { CartButton } from "@/components/cart/CartButton";
 
 const NAV_LINKS = [
   { href: "/proizvodi", label: "Proizvodi" },
@@ -39,16 +40,7 @@ export function Header() {
               <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" />
             </svg>
           </button>
-          <button
-            type="button"
-            aria-label="Korpa"
-            className="text-text-muted transition-colors hover:text-text"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8Z" />
-              <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-            </svg>
-          </button>
+          <CartButton />
         </div>
       </div>
     </header>

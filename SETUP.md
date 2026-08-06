@@ -1,19 +1,19 @@
-# Podešavanje — Google Sheets (preorder + newsletter) i Vercel deploy
+# Podešavanje — Google Sheets (narudžbe + newsletter) i Vercel deploy
 
 Ovaj fajl prati dvije stvari koje ti treba da uradiš van koda, jednom:
-1. Google Sheet koji prima preorder i newsletter prijave sa sajta
-2. Deploy sajta na Vercel (besplatan hosting)
+1. Google Sheet koji prima narudžbe (iz korpe) i newsletter prijave sa sajta, plus email obavještenje na tvoj privatni mail za svaku novu narudžbu
+2. Deploy sajta na Vercel (besplatan hosting) — ovo uradi tek kad budeš spremna da sajt ide live, ne prije
 
 ---
 
-## 1. Google Sheet + Apps Script (prima prijave sa sajta)
+## 1. Google Sheet + Apps Script (prima narudžbe i šalje ti email)
 
-Sajt trenutno **ne šalje nigdje** prijave dok ovo ne uradiš — dugmad rade, ali podaci se gube. Ovo je jednokratno podešavanje, traje ~10 minuta.
+Sajt trenutno **ne šalje nigdje** narudžbe dok ovo ne uradiš — korpa i checkout rade, ali podaci se gube. Ovo je jednokratno podešavanje, traje ~10 minuta. Korisno je i prije nego sajt ide live — možeš testirati narudžbu sama na localhost-u i vidjeti da li stiže u Sheet/email.
 
 ### Korak 1 — Napravi Google Sheet
 
 1. Idi na [sheets.google.com](https://sheets.google.com) (ulogovana na email koji želiš koristiti — npr. `hrnjicarmina17@gmail.com`)
-2. Napravi novi prazan sheet, nazovi ga npr. **"Smarthome — Prijave"**
+2. Napravi novi prazan sheet, nazovi ga npr. **"Domio — Narudžbe"**
 
 ### Korak 2 — Dodaj Apps Script
 
@@ -21,33 +21,57 @@ Sajt trenutno **ne šalje nigdje** prijave dok ovo ne uradiš — dugmad rade, a
 2. Obriši sav postojeći kod u editoru i zalijepi ovo:
 
 ```javascript
+// Ovdje ostaje TVOJ privatni mail — Apps Script radi u tvom Google nalogu,
+// ova adresa se nikad ne šalje na sajt niti se pojavljuje u kodu stranice.
+const NOTIFY_EMAIL = "hrnjicarmina17@gmail.com";
+
 function doPost(e) {
   const data = JSON.parse(e.postData.contents);
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheetName = data.type === "preorder" ? "Preorders" : "Newsletter";
+  const timestamp = new Date();
 
-  let sheet = ss.getSheetByName(sheetName);
-  if (!sheet) {
-    sheet = ss.insertSheet(sheetName);
-    if (data.type === "preorder") {
-      sheet.appendRow(["Datum", "Proizvod", "Način kontrole", "Veličina", "Dodaci", "Ukupno (KM)", "Email"]);
-    } else {
+  if (data.type === "order") {
+    let sheet = ss.getSheetByName("Narudžbe");
+    if (!sheet) {
+      sheet = ss.insertSheet("Narudžbe");
+      sheet.appendRow([
+        "Datum", "Email", "Proizvod", "Varijante", "Dodaci",
+        "Količina", "Cijena/kom (KM)", "Ukupno stavka (KM)", "Ukupno narudžba (KM)",
+      ]);
+    }
+
+    (data.items || []).forEach(function (item, index) {
+      sheet.appendRow([
+        timestamp,
+        data.email || "",
+        item.product || "",
+        item.variants || "",
+        item.addons || "",
+        item.quantity || "",
+        item.unitPrice || "",
+        item.lineTotal || "",
+        index === 0 ? (data.total || "") : "",
+      ]);
+    });
+
+    const itemsList = (data.items || [])
+      .map(function (item) {
+        var details = [item.variants, item.addons].filter(Boolean).join(", ");
+        return item.quantity + "x " + item.product + (details ? " (" + details + ")" : "");
+      })
+      .join("\n");
+
+    MailApp.sendEmail({
+      to: NOTIFY_EMAIL,
+      subject: "Nova narudžba — " + (data.total || "") + " KM",
+      body: "Nova narudžba sa sajta:\n\n" + itemsList + "\n\nUkupno: " + data.total + " KM\nEmail kupca: " + data.email,
+    });
+  } else {
+    let sheet = ss.getSheetByName("Newsletter");
+    if (!sheet) {
+      sheet = ss.insertSheet("Newsletter");
       sheet.appendRow(["Datum", "Email"]);
     }
-  }
-
-  const timestamp = new Date();
-  if (data.type === "preorder") {
-    sheet.appendRow([
-      timestamp,
-      data.product || "",
-      data.control || "",
-      data.size || "",
-      data.addons || "",
-      data.total || "",
-      data.email || "",
-    ]);
-  } else {
     sheet.appendRow([timestamp, data.email || ""]);
   }
 
@@ -57,7 +81,10 @@ function doPost(e) {
 }
 ```
 
-3. Klikni disketu (Save) gore lijevo, daj projektu ime npr. "Sheet forma"
+3. Zamijeni `hrnjicarmina17@gmail.com` u prvoj liniji koda sa mailom na koji stvarno želiš da stižu obavještenja o narudžbama, ako je drugačiji
+4. Klikni disketu (Save) gore lijevo, daj projektu ime npr. "Sheet forma"
+
+**Napomena:** `MailApp.sendEmail` je besplatan dio Google Apps Scripta (nije potreban nikakav dodatni servis) — limit je 100 mailova dnevno za običan Gmail nalog, što je više nego dovoljno dok se ne validira obim narudžbi.
 
 ### Korak 3 — Deploy kao Web App
 
@@ -67,7 +94,7 @@ function doPost(e) {
    - **Execute as:** Me (tvoj email)
    - **Who has access:** Anyone
 4. Klikni **Deploy**
-5. Google će tražiti da autorizuješ pristup (klikni kroz "Advanced" → "Go to ... (unsafe)" — ovo je tvoj vlastiti skript, sigurno je)
+5. Google će tražiti da autorizuješ pristup (klikni kroz "Advanced" → "Go to ... (unsafe)" — ovo je tvoj vlastiti skript, sigurno je). Ovaj put će tražiti i dozvolu da šalje mailove u tvoje ime (zbog obavještenja o narudžbi) — to je očekivano, odobri.
 6. Kopiraj URL koji dobiješ (izgleda kao `https://script.google.com/macros/s/XXXXXXX/exec`)
 
 ### Korak 4 — Pošalji mi taj URL (ili ga sama dodaj)
@@ -78,7 +105,7 @@ Ako mi pošalješ URL, ja ću ga dodati u projekat. Ili sama:
 2. Ubaci: `NEXT_PUBLIC_SHEETS_ENDPOINT=https://script.google.com/macros/s/XXXXXXX/exec`
 3. Restartuj dev server (`npm run dev`)
 
-Nakon toga, svaki preorder ili newsletter prijava sa sajta upisuje red u tvoj Sheet (dva taba: "Preorders" i "Newsletter", prave se automatski).
+Nakon toga, svaka narudžba iz korpe upisuje po jedan red **za svaku stavku** u tab "Narudžbe" (tako vidiš tačno šta je naručeno — proizvod, varijante, dodaci, količina) i odmah dobijaš email na `hrnjicarmina17@gmail.com` sa sažetkom narudžbe. Newsletter prijave idu u poseban tab "Newsletter". Oba taba se prave automatski pri prvoj prijavi.
 
 **Napomena:** ista vrijednost mora ići i na Vercel (vidi Korak 4 ispod) da radi i na živom sajtu, ne samo lokalno.
 

@@ -5,6 +5,7 @@ export interface VariantOption {
   price_km?: number;
   price_modifier_km?: number;
   recommended?: boolean;
+  downgrade_note?: string;
 }
 
 export interface VariantGroup {
