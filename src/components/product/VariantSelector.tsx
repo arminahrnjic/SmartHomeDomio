@@ -163,9 +163,18 @@ export function VariantSelector({
       )}
 
       <div className="flex flex-col gap-4 border-t border-border pt-6">
-        <div className="flex items-baseline justify-between">
-          <span className="text-sm text-text-muted">Cijena po komadu</span>
-          <span className="text-3xl font-bold tracking-tight text-text">{unitPrice} KM</span>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm text-text-muted">
+              {quantity > 1 ? "Ukupno" : "Cijena po komadu"}
+            </span>
+            <span className="text-3xl font-bold tracking-tight text-text">
+              {unitPrice * quantity} KM
+            </span>
+          </div>
+          {quantity > 1 && (
+            <span className="text-right text-xs text-text-muted">{unitPrice} KM po komadu</span>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
