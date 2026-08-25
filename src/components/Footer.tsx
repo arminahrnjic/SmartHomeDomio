@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { siteConfig } from "@/config/siteConfig";
 
 const COLUMNS = [
@@ -27,13 +28,13 @@ export function Footer() {
           <div key={column.title} className="flex flex-col gap-3">
             <span className="text-sm font-semibold text-text">{column.title}</span>
             {column.links.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="text-sm text-text-muted hover:text-text"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         ))}

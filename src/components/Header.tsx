@@ -18,13 +18,13 @@ export function Header() {
 
         <nav className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="text-sm font-medium text-text-muted transition-colors hover:text-text"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 

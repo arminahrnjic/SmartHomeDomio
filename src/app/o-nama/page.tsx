@@ -61,17 +61,6 @@ export default function ONamaPage() {
           </div>
         </div>
       </section>
-
-      <section className="w-full bg-bg-alt px-6 py-24">
-        <div className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
-          <h2 className="text-[clamp(1.8rem,3vw,2.8rem)] font-bold tracking-tight text-text">
-            Popričajmo
-          </h2>
-          <p className="text-base text-text-muted">
-            Pitanje o proizvodu, saradnji ili nešto drugo? Prijavite se na newsletter ispod i javićemo vam se.
-          </p>
-        </div>
-      </section>
     </main>
   );
 }

@@ -48,7 +48,7 @@ Koncept: **Apple × Tesla × Dyson.** Premium, minimalistički, mnogo negativnog
 - Bez agresivnih/brzih efekata — sve treba djelovati "skupo" i mirno
 
 **Reference za layout sekcija (redoslijed na Home stranici):**
-1. Announcement bar (dostava/garancija/kontakt info)
+1. Announcement bar (dostava/garancija — nema kontakt info dok ne postoji prava mail domena/društvene mreže)
 2. Sticky header (logo, nav, cart, account)
 3. Hero (full-screen, jedan proizvod/scena, 2 CTA dugmeta)
 4. "Zašto mi" — 4-5 kartica sa ikonama
@@ -88,7 +88,9 @@ Ovo je sigurnija opcija jer:
 
 **Struktura jednog proizvoda u `products.json` — sa varijantama i dodacima:**
 
-Proizvod ima **varijante** (kupac bira) i **dodatke/add-ons** (opciono, dodaju se u korpu). UI logika: sve select-ove postaviti na najbolju/najskuplju opciju po defaultu (WiFi, ne Remote), kupac svjesno "downgrade-uje" ako želi jeftinije — ne obrnuto. Cijena na stranici se live ažurira dok kupac bira varijante (kao Apple konfigurator).
+Proizvod ima **varijante** (kupac bira, npr. način kontrole WiFi/Remote) i **dodatke/add-ons** (opciono, dodaju se u korpu). UI logika: sve select-ove postaviti na najbolju/najskuplju opciju po defaultu (WiFi, ne Remote), kupac svjesno "downgrade-uje" ako želi jeftinije — ne obrnuto. Cijena na stranici se live ažurira dok kupac bira varijante (kao Apple konfigurator).
+
+**Varijanta vs zaseban proizvod:** ako je razlika suštinski "drugi proizvod" (npr. Single vs Double zavjese, ne samo boja/dodatak), napravi **dva zasebna proizvoda** u `products.json` (svaki sa svojom `id`, slikom, cijenom), ne jedan proizvod sa "size" variant grupom — tako je odlučeno za Curtain Robot (vidi katalog ispod). `VariantOption` ipak MOŽE nositi svoj `images` niz za slučajeve gdje varijanta stvarno treba drugu sliku unutar istog proizvoda (npr. boja) — infrastruktura postoji (`ProductPurchasePanel`), samo se trenutno ne koristi ni za jedan proizvod.
 
 ```json
 {
@@ -113,25 +115,17 @@ Proizvod ima **varijante** (kupac bira) i **dodatke/add-ons** (opciono, dodaju s
           "id": "wifi",
           "label": "Puna kontrola (App + Glas)",
           "sublabel": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
-          "price_km": 179,
+          "price_km": 224,
           "recommended": true
         },
         {
           "id": "remote",
           "label": "Osnovna kontrola (Daljinski)",
           "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
-          "price_km": 139,
-          "recommended": false
+          "price_km": 184,
+          "recommended": false,
+          "downgrade_note": "Bez mogućnosti kontrole na daljinu preko telefona"
         }
-      ]
-    },
-    {
-      "id": "size",
-      "label": "Veličina",
-      "default": "single",
-      "options": [
-        { "id": "single", "label": "Single — jedna zavjesa", "price_modifier_km": 0 },
-        { "id": "double", "label": "Double — dvokrilne zavjese / širi prozor", "price_modifier_km": 45 }
       ]
     }
   ],
@@ -140,21 +134,24 @@ Proizvod ima **varijante** (kupac bira) i **dodatke/add-ons** (opciono, dodaju s
       "id": "solar-panel",
       "label": "Solarni punjač",
       "description": "Automatsko punjenje robota preko sunca — nikad ne brinete o bateriji.",
-      "price_km": 19,
+      "price_km": 39,
       "default_checked": false
     }
   ],
   "specs": {
-    "power_wifi": "12W (Double) / 4W (Single)",
+    "dimensions": "170 x 86 x 55mm",
+    "power": "12W",
     "battery": "4000mAh, odvojiva, punjenje Type-C",
     "max_stroke": "20m",
     "app": "Tuya / Smart Life"
   },
-  "images": ["/products/curtain-robot/1.jpg"],
+  "images": ["/products/curtain-robot/1.png"],
   "status": "preorder",
   "preorder_note": "Sljedeća grupa narudžbi zatvara se [DATUM]. Isporuka 10-15 dana nakon slanja iz fabrike."
 }
 ```
+
+(Ovo je stvarni trenutni `smart-curtain-robot` — Double varijanta. Single je zaseban proizvod `smart-curtain-robot-single`, ista struktura, svoje cijene/specs/slika.)
 
 **UX napomena za stranicu proizvoda:** ispod selektora za "Način kontrole", pored Remote opcije dodati kratku napomenu koja blago potcrtava razliku bez da bude nametljivo — npr. "Bez mogućnosti kontrole na daljinu preko telefona" — da kupac razumije šta gubi, ali ne da djeluje kao pritisak na prodaju.
 
@@ -167,7 +164,9 @@ Proizvod ima **varijante** (kupac bira) i **dodatke/add-ons** (opciono, dodaju s
 Dobavljač: **Dongguan Lianyou Intelligent Technology Co., Ltd.** (Cassie, luoyixin@lianyousmart.com)
 Katalog: aktivan proizvođač, ima R&D tim, vlastitu fabriku (osnovani 2020, Fenggang Town, Dongguan).
 
-**Odluka: nudimo objema varijantama kupcu na izbor (varijantni selektor na stranici proizvoda), ne fiksiramo jedan SKU.** Default (predizabrano) je uvijek WiFi + Single — kupac svjesno bira jeftiniju/osnovniju opciju ako želi, ne obrnuto. Ovo je namjerna UX odluka: cilj je da defaultna, najistaknutija opcija bude ona koju želimo da većina kupi (puna kontrola), a izbor ostaje kupcu radi osjećaja kontrole nad kupovinom.
+**Odluka (ažurirano): Single i Double su dva zasebna proizvoda u katalogu** (`smart-curtain-robot` = Double, `smart-curtain-robot-single` = Single), svaki sa svojom stranicom, slikom i cijenom — ne jedan proizvod sa "veličina" variant grupom kao što je ranije bilo. Unutar svakog od njih, kupac i dalje bira način kontrole (WiFi vs Remote) kroz variant selektor — tu odluka o WiFi-kao-default ostaje ista. Default (predizabrano) je uvijek WiFi — kupac svjesno bira jeftiniju/osnovniju opciju ako želi, ne obrnuto. Ovo je namjerna UX odluka: cilj je da defaultna, najistaknutija opcija bude ona koju želimo da većina kupi (puna kontrola), a izbor ostaje kupcu radi osjećaja kontrole nad kupovinom.
+
+**Trenutne maloprodajne cijene (KM):** Double WiFi 224 / Remote 184, Single WiFi 179 / Remote 139. **Napomena:** ove cijene su prenesene iz stare "size +45 KM" logike kad je Double bio samo varijanta Single-a, NISU nezavisno preračunate od stvarne EXW cijene Double-a ($47.85, skoro duplo veće od Single-ove $25.76). Vrijedi preračunati obje cijene metodom ispod prije nego se stvarno počne prodavati Double.
 
 | Model | Konekcija | 100 kom (USD/kom EXW) | 500 kom | 1000 kom |
 |---|---|---|---|---|
@@ -182,18 +181,20 @@ Napomena: EXW cijena = bez carine, PDV-a, transporta, bankarskih troškova, pako
 
 Specifikacije: Single — 152x81x75mm, 4W; Double — 170x86x55mm, 12W, pakovanje 2 komada/kutija (za dvokrilne zavjese/šire prozore). Oba: baterija 4000mAh (odvojiva, Type-C punjenje), brzina 10 sek/metar, max hod 20m, Tuya/Smart Life app, Roman rod i track rod šine.
 
-### Solarni punjač (add-on, ne samostalan proizvod)
+### Solarni punjač — I zaseban proizvod I add-on
 
-Dodatak koji se nudi na stranici Curtain Robot-a (checkbox, ne obavezan), isti dobavljač (Lianyou, LY-113):
+Koristi se LY-113 Solar Charging Board (rotacija 180°, extendable) varijanta, isti dobavljač (Lianyou):
 
 | Tip | 100 kom | 500 kom | 1000 kom |
 |---|---|---|---|
 | Solar Charging Board (rotacija 180°, extendable) | $5.15 | $4.95 | $4.75 |
 | Solar Panel (fiksni, 150x81x8mm) | $3.75 | $3.65 | $3.45 |
 
-Prikazuje se kao "Nikad ne brinite o bateriji — dodajte solarni punjač" odmah ispod glavnog izbora varijanti na stranici proizvoda, checkbox default isključen (kupac svjesno dodaje).
+Sad je i **zaseban proizvod** u katalogu (`solarni-punjac`, ima svoju stranicu) i dalje **add-on checkbox** na obje Curtain Robot stranice (Single i Double) — ista cijena (39 KM) na svim mjestima, namjerno sinhronizovano jer je isti fizički artikal. Prikazuje se kao "Nikad ne brinite o bateriji — dodajte solarni punjač" odmah ispod glavnog izbora varijanti, checkbox default isključen (kupac svjesno dodaje).
 
-Ostali proizvodi u ponudi istog dobavljača (za buduće širenje kataloga): Blinds Motor, Smart Door Lock, Smart Switch Pusher, Temperature & Humidity Sensor, PIR+Brightness Sensor, Radar Human Sensor, Human Motion & Presence Sensor, Smart Water Leakage Sensor, Smart Air Quality Monitor, Tire Inflator. (Solar Charging Panel je već aktivan kao add-on uz Curtain Robot — vidi sekciju ispod.)
+**Metodologija za landed cost / maloprodajnu cijenu** (korištena za solarni punjač, ponoviti za buduće proizvode uključujući preračun Double cijene gore i Smart Plug ispod): EXW USD → KM preko fiksne EUR-KM veze (1.95583) × trenutni USD/EUR kurs (provjeriti, ne pretpostavljati) → + procjena transporta → + BiH carina (istražiti raspon za kategoriju, koristiti razumnu sredinu ako nema tačnog HS koda) → + PDV 17% (fiksno u BiH) → + rezerva ~10% za bankarske troškove/pakovanje → landed cost → maloprodaja = landed cost / (1 − ciljna marža, obično ~60-65% za dodatke). Za solarni punjač: EXW $5.15 → ~13.75 KM landed → **39 KM** maloprodaja.
+
+Ostali proizvodi u ponudi istog dobavljača (za buduće širenje kataloga): Blinds Motor, Smart Door Lock, Smart Switch Pusher, Temperature & Humidity Sensor, PIR+Brightness Sensor, Radar Human Sensor, Human Motion & Presence Sensor, Smart Water Leakage Sensor, Smart Air Quality Monitor, Tire Inflator.
 
 ### 2. Smart Plug / Pametna utičnica — ⚠️ NEMA JOŠ DOBAVLJAČA
 

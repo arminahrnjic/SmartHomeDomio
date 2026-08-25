@@ -144,9 +144,9 @@ Imaš već GitHub nalog. Fali samo Vercel nalog i povezivanje.
 
 1. Na Vercel dashboardu klikni **Add New → Project**
 2. Odaberi `smarthome` repozitorij sa GitHub-a
-3. Prije klika na Deploy, otvori **Environment Variables** i dodaj:
-   - Name: `NEXT_PUBLIC_SHEETS_ENDPOINT`
-   - Value: (isti URL iz Koraka 1 gore)
+3. Prije klika na Deploy, otvori **Environment Variables** i dodaj oba:
+   - Name: `NEXT_PUBLIC_SHEETS_ENDPOINT` — Value: (isti URL iz sekcije 1 gore)
+   - Name: `NEXT_PUBLIC_SITE_URL` — Value: pravi javni link koji ćeš dobiti (npr. `https://smarthome.vercel.app`, ili prava domena ako je već kupljena). Ovo koristi SEO (Open Graph slike, sitemap.xml) — bez ovoga bi svi ti linkovi i dalje pokazivali na `example.com` čak i na živom sajtu.
 4. Klikni **Deploy**
 
-Nakon par minuta dobićeš pravi javni link (npr. `smarthome.vercel.app`) koji možeš dijeliti. Svaki naredni `git push` na GitHub automatski ažurira live sajt.
+Nakon par minuta dobićeš pravi javni link (npr. `smarthome.vercel.app`) koji možeš dijeliti. Ako u koraku 3 nisi znala tačan URL unaprijed (Vercel ga generiše tek nakon prvog deploy-a), vrati se u **Project → Settings → Environment Variables**, dodaj/ispravi `NEXT_PUBLIC_SITE_URL` na stvarni URL, i uradi redeploy (Deployments → ⋯ → Redeploy). Svaki naredni `git push` na GitHub automatski ažurira live sajt.

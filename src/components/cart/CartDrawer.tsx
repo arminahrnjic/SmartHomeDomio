@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
@@ -17,6 +17,18 @@ export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const prevItemCount = useRef(items.length);
+
+  // CartDrawer ostaje montiran cijelu sesiju (u root layoutu), pa "success" stanje
+  // ostaje i nakon zatvaranja korpe. Ako korisnik nakon uspješne narudžbe doda nešto
+  // novo, resetuj status — inače bi vidio staru poruku "Hvala" umjesto nove korpe.
+  useEffect(() => {
+    if (status === "success" && items.length > prevItemCount.current) {
+      setStatus("idle");
+      setEmail("");
+    }
+    prevItemCount.current = items.length;
+  }, [items.length, status]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -96,7 +108,12 @@ export function CartDrawer() {
           </button>
         </div>
 
-        {items.length === 0 ? (
+        {status === "success" ? (
+          <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
+            <p className="text-base font-medium text-text">Hvala! Narudžba je zabilježena.</p>
+            <p className="text-sm text-text-muted">Javićemo vam se na {email} uskoro.</p>
+          </div>
+        ) : items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
             <p className="text-sm text-text-muted">Korpa je prazna.</p>
             <Link
@@ -106,11 +123,6 @@ export function CartDrawer() {
             >
               Pogledaj proizvode
             </Link>
-          </div>
-        ) : status === "success" ? (
-          <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-            <p className="text-base font-medium text-text">Hvala! Narudžba je zabilježena.</p>
-            <p className="text-sm text-text-muted">Javićemo vam se na {email} uskoro.</p>
           </div>
         ) : (
           <>
