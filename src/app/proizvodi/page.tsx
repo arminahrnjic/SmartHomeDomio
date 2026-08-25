@@ -3,7 +3,7 @@ import products from "@data/products.json";
 import type { Product } from "@/types/product";
 import { ProductCard } from "@/components/product/ProductCard";
 
-const ALL_PRODUCTS = products as Product[];
+const ALL_PRODUCTS = products as unknown as Product[];
 
 export const metadata: Metadata = {
   title: "Proizvodi",

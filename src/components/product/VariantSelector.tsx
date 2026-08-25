@@ -4,12 +4,19 @@ import { useEffect, useMemo, useState } from "react";
 import type { Product } from "@/types/product";
 import { useCart } from "@/context/CartContext";
 
-export function VariantSelector({ product, image }: { product: Product; image?: string }) {
+export function VariantSelector({
+  product,
+  image,
+  selectedOptions,
+  onSelectOption,
+}: {
+  product: Product;
+  image?: string;
+  selectedOptions: Record<string, string>;
+  onSelectOption: (groupId: string, optionId: string) => void;
+}) {
   const { addItem, openCart } = useCart();
 
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(() =>
-    Object.fromEntries(product.variant_groups.map((group) => [group.id, group.default]))
-  );
   const [addonChecked, setAddonChecked] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(product.addons.map((addon) => [addon.id, addon.default_checked]))
   );
@@ -92,9 +99,7 @@ export function VariantSelector({ product, image }: { product: Product; image?: 
                   <button
                     key={option.id}
                     type="button"
-                    onClick={() =>
-                      setSelectedOptions((prev) => ({ ...prev, [group.id]: option.id }))
-                    }
+                    onClick={() => onSelectOption(group.id, option.id)}
                     className={`relative flex flex-1 flex-col gap-1 rounded-xl border px-5 py-4 text-left transition-all ${
                       isRecommended
                         ? selected

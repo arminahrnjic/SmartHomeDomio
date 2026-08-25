@@ -39,8 +39,18 @@
         "label": "Veličina",
         "default": "single",
         "options": [
-          { "id": "single", "label": "Single — jedna zavjesa", "price_modifier_km": 0 },
-          { "id": "double", "label": "Double — dvokrilne zavjese / širi prozor", "price_modifier_km": 45 }
+          {
+            "id": "single",
+            "label": "Single — jedna zavjesa",
+            "price_modifier_km": 0,
+            "images": ["/products/curtain-robot-single/1.png"]
+          },
+          {
+            "id": "double",
+            "label": "Double — dvokrilne zavjese / širi prozor",
+            "price_modifier_km": 45,
+            "images": ["/products/curtain-robot/1.png"]
+          }
         ]
       }
     ],
@@ -49,7 +59,7 @@
         "id": "solar-panel",
         "label": "Solarni punjač",
         "description": "Automatsko punjenje robota preko sunca — nikad ne brinete o bateriji.",
-        "price_km": 19,
+        "price_km": 39,
         "default_checked": false
       }
     ],
@@ -59,8 +69,38 @@
       "max_stroke": "20m",
       "app": "Tuya / Smart Life"
     },
-    "images": ["/products/curtain-robot/1.jpg"],
+    "images": ["/products/curtain-robot/1.png"],
     "status": "preorder",
     "preorder_note": "Sljedeća grupa narudžbi zatvara se uskoro. Isporuka 10-15 dana nakon slanja iz fabrike."
+  },
+  {
+    "id": "solarni-punjac",
+    "name": "Solarni punjač za Curtain Robot",
+    "tagline": "Nikad ne brinite o bateriji",
+    "short_description": "Automatsko punjenje na sunčevu energiju za Smart Curtain Robot — postavite jednom, zaboravite na punjenje.",
+    "features": [
+      "Kompatibilan sa Smart Curtain Robot (Single i Double)",
+      "Rotacija 180° — uvijek uhvati najviše sunca",
+      "Produživ nosač za fleksibilno postavljanje na prozoru",
+      "Jednostavna montaža, bez alata"
+    ],
+    "variant_groups": [
+      {
+        "id": "tip",
+        "label": "Tip",
+        "default": "standard",
+        "options": [
+          { "id": "standard", "label": "Solarni punjač", "price_km": 39 }
+        ]
+      }
+    ],
+    "addons": [],
+    "specs": {
+      "tip": "Solar Charging Board — rotacija 180°, produživ nosač",
+      "kompatibilnost": "Smart Curtain Robot (Single i Double)"
+    },
+    "images": ["/products/solar-panel/1.png"],
+    "status": "preorder",
+    "preorder_note": "Dostupan uz narudžbu Smart Curtain Robot-a ili samostalno. Isporuka zajedno sa glavnom pošiljkom."
   }
 ]

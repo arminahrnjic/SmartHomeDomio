@@ -2,7 +2,7 @@ import products from "@data/products.json";
 import type { Product } from "@/types/product";
 import { ProductCard } from "@/components/product/ProductCard";
 
-const FEATURED = products as Product[];
+const FEATURED = products as unknown as Product[];
 
 export function FeaturedProducts() {
   return (

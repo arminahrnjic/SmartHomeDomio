@@ -4,7 +4,7 @@ import type { Product } from "@/types/product";
 import { siteConfig } from "@/config/siteConfig";
 import { getAllPosts } from "@/lib/blog";
 
-const ALL_PRODUCTS = products as Product[];
+const ALL_PRODUCTS = products as unknown as Product[];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

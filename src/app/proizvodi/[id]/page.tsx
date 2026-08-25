@@ -4,18 +4,33 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import products from "@data/products.json";
 import type { Product } from "@/types/product";
-import { ProductGallery } from "@/components/product/ProductGallery";
-import { VariantSelector } from "@/components/product/VariantSelector";
+import { ProductPurchasePanel } from "@/components/product/ProductPurchasePanel";
 import { siteConfig } from "@/config/siteConfig";
 
-const ALL_PRODUCTS = products as Product[];
+const ALL_PRODUCTS = products as unknown as Product[];
 
 function getProduct(id: string) {
   return ALL_PRODUCTS.find((product) => product.id === id);
 }
 
-function getExistingImages(images: string[]) {
-  return images.filter((image) => fs.existsSync(path.join(process.cwd(), "public", image)));
+function getExistingImages(images: string[] | undefined) {
+  return (images ?? []).filter((image) => fs.existsSync(path.join(process.cwd(), "public", image)));
+}
+
+// Filtrira i images na nivou proizvoda i po-varijantne images (npr. Single vs Double)
+// tako da galerija nikad ne referiše fajl koji jos nije dodan u /public.
+function withExistingImages(product: Product): Product {
+  return {
+    ...product,
+    images: getExistingImages(product.images),
+    variant_groups: product.variant_groups.map((group) => ({
+      ...group,
+      options: group.options.map((option) => ({
+        ...option,
+        images: option.images ? getExistingImages(option.images) : undefined,
+      })),
+    })),
+  };
 }
 
 export function generateStaticParams() {
@@ -67,15 +82,13 @@ export default async function ProductPage({
     notFound();
   }
 
-  const images = getExistingImages(product.images);
+  const displayProduct = withExistingImages(product);
 
   return (
     <main className="flex flex-1 flex-col">
       <section className="w-full px-6 py-16">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-16 lg:grid-cols-2">
-          <ProductGallery images={images} alt={product.name} />
-
-          <div className="flex flex-col gap-6">
+          <ProductPurchasePanel product={displayProduct} images={displayProduct.images}>
             {product.badge && (
               <span className="w-fit rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white">
                 {product.badge}
@@ -97,9 +110,7 @@ export default async function ProductPage({
                 </li>
               ))}
             </ul>
-
-            <VariantSelector product={product} image={images[0]} />
-          </div>
+          </ProductPurchasePanel>
         </div>
       </section>
 
