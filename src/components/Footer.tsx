@@ -6,7 +6,6 @@ const COLUMNS = [
     links: [
       { href: "/o-nama", label: "O nama" },
       { href: "/#blog", label: "Blog" },
-      { href: "#kontakt", label: "Kontakt" },
     ],
   },
   {
@@ -17,7 +16,7 @@ const COLUMNS = [
 
 export function Footer() {
   return (
-    <footer id="kontakt" className="w-full border-t border-border bg-bg px-6 py-16">
+    <footer className="w-full border-t border-border bg-bg px-6 py-16">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 sm:grid-cols-[2fr_1fr_1fr]">
         <div className="flex flex-col gap-3">
           <span className="text-lg font-bold tracking-tight text-text">{siteConfig.name}</span>
