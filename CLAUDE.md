@@ -115,14 +115,14 @@ Proizvod ima **varijante** (kupac bira, npr. način kontrole WiFi/Remote) i **do
           "id": "wifi",
           "label": "Puna kontrola (App + Glas)",
           "sublabel": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
-          "price_km": 224,
+          "price_km": 339,
           "recommended": true
         },
         {
           "id": "remote",
           "label": "Osnovna kontrola (Daljinski)",
           "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
-          "price_km": 184,
+          "price_km": 259,
           "recommended": false,
           "downgrade_note": "Bez mogućnosti kontrole na daljinu preko telefona"
         }
@@ -166,7 +166,9 @@ Katalog: aktivan proizvođač, ima R&D tim, vlastitu fabriku (osnovani 2020, Fen
 
 **Odluka (ažurirano): Single i Double su dva zasebna proizvoda u katalogu** (`smart-curtain-robot` = Double, `smart-curtain-robot-single` = Single), svaki sa svojom stranicom, slikom i cijenom — ne jedan proizvod sa "veličina" variant grupom kao što je ranije bilo. Unutar svakog od njih, kupac i dalje bira način kontrole (WiFi vs Remote) kroz variant selektor — tu odluka o WiFi-kao-default ostaje ista. Default (predizabrano) je uvijek WiFi — kupac svjesno bira jeftiniju/osnovniju opciju ako želi, ne obrnuto. Ovo je namjerna UX odluka: cilj je da defaultna, najistaknutija opcija bude ona koju želimo da većina kupi (puna kontrola), a izbor ostaje kupcu radi osjećaja kontrole nad kupovinom.
 
-**Trenutne maloprodajne cijene (KM):** Double WiFi 224 / Remote 184, Single WiFi 179 / Remote 139. **Napomena:** ove cijene su prenesene iz stare "size +45 KM" logike kad je Double bio samo varijanta Single-a, NISU nezavisno preračunate od stvarne EXW cijene Double-a ($47.85, skoro duplo veće od Single-ove $25.76). Vrijedi preračunati obje cijene metodom ispod prije nego se stvarno počne prodavati Double.
+**Trenutne maloprodajne cijene (KM):** Double WiFi 339 / Remote 259 (preračunato 2026-08-25 metodom ispod, od stvarne EXW cijene Double-a — $47.85 WiFi, $35.95 Remote — ne više od Single+45 KM logike). Single WiFi 179 / Remote 139 (ostaje nepromijenjeno, ovo je stara pre-postavljena vrijednost iz spec fajla, nije nezavisno preračunata istom metodom — vrijedi uraditi i za Single ako se traži konzistentnost).
+
+Kalkulacija za Double WiFi: $47.85 × 1.69 KM/USD = 80.87 KM EXW → + ~$2/kom transport (procjena, konsolidovana pošiljka) = 84.25 KM CIF → + 10% carina = 92.68 KM → + 17% PDV = 108.44 KM → + 10% rezerva (bankarski troškovi/pakovanje) = **119.28 KM landed** → uz ~65% marže = 339 KM maloprodaja. Ista metoda za Remote ($35.95 EXW) → ~90.79 KM landed → 259 KM maloprodaja.
 
 | Model | Konekcija | 100 kom (USD/kom EXW) | 500 kom | 1000 kom |
 |---|---|---|---|---|

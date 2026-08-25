@@ -40,27 +40,6 @@ export default function ONamaPage() {
           </p>
         </div>
       </section>
-
-      <section className="w-full bg-bg px-6 py-24">
-        <div className="mx-auto max-w-4xl">
-          {/* Placeholder za fotografiju/CGI proizvoda ili scene doma — ne portret osobe */}
-          <div className="flex aspect-[16/9] w-full items-center justify-center rounded-2xl bg-gradient-to-br from-bg-alt to-bg">
-            <svg
-              width="56"
-              height="56"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              className="text-primary/40"
-            >
-              <path d="M4 11.5 12 4l8 7.5" />
-              <path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9" />
-              <path d="M10 20v-5h4v5" />
-            </svg>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

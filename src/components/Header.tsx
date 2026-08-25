@@ -29,16 +29,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <button
-            type="button"
-            aria-label="Nalog"
-            className="text-text-muted transition-colors hover:text-text"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" />
-            </svg>
-          </button>
           <CartButton />
         </div>
       </div>

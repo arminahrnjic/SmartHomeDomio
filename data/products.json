@@ -21,14 +21,14 @@
             "id": "wifi",
             "label": "Puna kontrola (App + Glas)",
             "sublabel": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
-            "price_km": 224,
+            "price_km": 339,
             "recommended": true
           },
           {
             "id": "remote",
             "label": "Osnovna kontrola (Daljinski)",
             "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
-            "price_km": 184,
+            "price_km": 259,
             "recommended": false,
             "downgrade_note": "Bez mogućnosti kontrole na daljinu preko telefona"
           }

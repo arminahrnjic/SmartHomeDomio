@@ -12,6 +12,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteConfig.url}/proizvodi`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${siteConfig.url}/o-nama`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${siteConfig.url}/blog`, changeFrequency: "weekly", priority: 0.6 },
+    { url: `${siteConfig.url}/uslovi-koristenja`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${siteConfig.url}/politika-privatnosti`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${siteConfig.url}/politika-povrata`, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   const productRoutes: MetadataRoute.Sitemap = ALL_PRODUCTS.map((product) => ({
