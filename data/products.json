@@ -21,35 +21,16 @@
             "id": "wifi",
             "label": "Puna kontrola (App + Glas)",
             "sublabel": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
-            "price_km": 179,
+            "price_km": 224,
             "recommended": true
           },
           {
             "id": "remote",
             "label": "Osnovna kontrola (Daljinski)",
             "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
-            "price_km": 139,
+            "price_km": 184,
             "recommended": false,
             "downgrade_note": "Bez mogućnosti kontrole na daljinu preko telefona"
-          }
-        ]
-      },
-      {
-        "id": "size",
-        "label": "Veličina",
-        "default": "single",
-        "options": [
-          {
-            "id": "single",
-            "label": "Single — jedna zavjesa",
-            "price_modifier_km": 0,
-            "images": ["/products/curtain-robot-single/1.png"]
-          },
-          {
-            "id": "double",
-            "label": "Double — dvokrilne zavjese / širi prozor",
-            "price_modifier_km": 45,
-            "images": ["/products/curtain-robot/1.png"]
           }
         ]
       }
@@ -64,12 +45,68 @@
       }
     ],
     "specs": {
-      "power_wifi": "12W (Double) / 4W (Single)",
+      "dimensions": "170 x 86 x 55mm",
+      "power": "12W",
       "battery": "4000mAh, odvojiva, punjenje Type-C",
       "max_stroke": "20m",
       "app": "Tuya / Smart Life"
     },
     "images": ["/products/curtain-robot/1.png"],
+    "status": "preorder",
+    "preorder_note": "Sljedeća grupa narudžbi zatvara se uskoro. Isporuka 10-15 dana nakon slanja iz fabrike."
+  },
+  {
+    "id": "smart-curtain-robot-single",
+    "name": "Smart Curtain Robot Single",
+    "tagline": "Automatski otvarajte i zatvarajte jednu zavjesu",
+    "short_description": "Pretvorite jednu zavjesu u pametnu. Radi na Roman rod i track rod šinama.",
+    "features": [
+      "Mobilna aplikacija i glasovna kontrola (Alexa, Google Home) — WiFi varijanta",
+      "Tiho otvaranje, brzina 10 sec/metar",
+      "Baterija do 6 mjeseci rada, odvojiva, Type-C punjenje",
+      "Kompatibilan s većinom šina"
+    ],
+    "variant_groups": [
+      {
+        "id": "control",
+        "label": "Način kontrole",
+        "default": "wifi",
+        "options": [
+          {
+            "id": "wifi",
+            "label": "Puna kontrola (App + Glas)",
+            "sublabel": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
+            "price_km": 179,
+            "recommended": true
+          },
+          {
+            "id": "remote",
+            "label": "Osnovna kontrola (Daljinski)",
+            "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
+            "price_km": 139,
+            "recommended": false,
+            "downgrade_note": "Bez mogućnosti kontrole na daljinu preko telefona"
+          }
+        ]
+      }
+    ],
+    "addons": [
+      {
+        "id": "solar-panel",
+        "label": "Solarni punjač",
+        "description": "Automatsko punjenje robota preko sunca — nikad ne brinete o bateriji.",
+        "price_km": 39,
+        "default_checked": false
+      }
+    ],
+    "specs": {
+      "dimensions": "152 x 81 x 75mm",
+      "power": "4W",
+      "battery": "4000mAh, odvojiva, punjenje Type-C",
+      "max_stroke": "20m",
+      "app": "Tuya / Smart Life"
+    },
+    "images": ["/products/curtain-robot-single/1.png"],
     "status": "preorder",
     "preorder_note": "Sljedeća grupa narudžbi zatvara se uskoro. Isporuka 10-15 dana nakon slanja iz fabrike."
   },

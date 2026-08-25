@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig, BRAND_NAME } from "@/config/siteConfig";
+import { BRAND_NAME } from "@/config/siteConfig";
 
 export const metadata: Metadata = {
   title: "O nama",
@@ -68,39 +68,8 @@ export default function ONamaPage() {
             Popričajmo
           </h2>
           <p className="text-base text-text-muted">
-            Pitanje o proizvodu, saradnji ili nešto drugo? Javite nam se.
+            Pitanje o proizvodu, saradnji ili nešto drugo? Prijavite se na newsletter ispod i javićemo vam se.
           </p>
-
-          <a
-            href={`mailto:${siteConfig.contact.email}`}
-            className="text-base font-medium text-text underline underline-offset-4 hover:text-primary"
-          >
-            {siteConfig.contact.email}
-          </a>
-
-          <div className="flex items-center gap-5">
-            <a
-              href={siteConfig.social.instagram}
-              aria-label="Instagram"
-              className="text-text-muted transition-colors hover:text-text"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
-            <a
-              href={siteConfig.social.tiktok}
-              aria-label="TikTok"
-              className="text-text-muted transition-colors hover:text-text"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M14 4v10.5a3.5 3.5 0 1 1-3-3.46" />
-                <path d="M14 4c.5 2.4 2.2 4 5 4.2" />
-              </svg>
-            </a>
-          </div>
         </div>
       </section>
     </main>

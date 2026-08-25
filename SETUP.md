@@ -73,6 +73,12 @@ function doPost(e) {
       sheet.appendRow(["Datum", "Email"]);
     }
     sheet.appendRow([timestamp, data.email || ""]);
+
+    MailApp.sendEmail({
+      to: NOTIFY_EMAIL,
+      subject: "Nova prijava za newsletter",
+      body: "Nova email adresa prijavljena na newsletter:\n\n" + (data.email || ""),
+    });
   }
 
   return ContentService.createTextOutput(JSON.stringify({ ok: true })).setMimeType(
@@ -86,7 +92,17 @@ function doPost(e) {
 
 **Napomena:** `MailApp.sendEmail` je besplatan dio Google Apps Scripta (nije potreban nikakav dodatni servis) — limit je 100 mailova dnevno za običan Gmail nalog, što je više nego dovoljno dok se ne validira obim narudžbi.
 
-### Korak 3 — Deploy kao Web App
+**Već si jednom postavila ovaj skript?** Kod iznad je ažuriran (dodato slanje mail obavještenja i za newsletter prijave, ne samo za narudžbe). Da ga primijeniš na već postojeći deployment (URL ti ostaje isti, ne treba dirati `.env.local`):
+
+1. Otvori isti Sheet → **Extensions → Apps Script**
+2. Zamijeni sav kod novom verzijom iznad, Save (disketa)
+3. Gore desno **Deploy → Manage deployments**
+4. Klikni olovčicu (Edit) na postojećem deploymentu
+5. Kraj "Version" odaberi **New version**, pa **Deploy**
+
+Ovo je bitno — samo Save u editoru NE ažurira live URL, mora se eksplicitno napraviti "New version" kroz Manage deployments.
+
+### Korak 3 — Deploy kao Web App (samo ako ovo radiš prvi put)
 
 1. Gore desno klikni **Deploy → New deployment**
 2. Kraj "Select type" klikni na zupčanik i odaberi **Web app**
@@ -105,7 +121,7 @@ Ako mi pošalješ URL, ja ću ga dodati u projekat. Ili sama:
 2. Ubaci: `NEXT_PUBLIC_SHEETS_ENDPOINT=https://script.google.com/macros/s/XXXXXXX/exec`
 3. Restartuj dev server (`npm run dev`)
 
-Nakon toga, svaka narudžba iz korpe upisuje po jedan red **za svaku stavku** u tab "Narudžbe" (tako vidiš tačno šta je naručeno — proizvod, varijante, dodaci, količina) i odmah dobijaš email na `hrnjicarmina17@gmail.com` sa sažetkom narudžbe. Newsletter prijave idu u poseban tab "Newsletter". Oba taba se prave automatski pri prvoj prijavi.
+Nakon toga, svaka narudžba iz korpe upisuje po jedan red **za svaku stavku** u tab "Narudžbe" (tako vidiš tačno šta je naručeno — proizvod, varijante, dodaci, količina) i odmah dobijaš email na `hrnjicarmina17@gmail.com` sa sažetkom narudžbe. Newsletter prijave idu u poseban tab "Newsletter" **i sad takođe šalju email obavještenje** (isto na `hrnjicarmina17@gmail.com`) — ranije nisu slale mail, samo upisivale red u Sheet. Oba taba se prave automatski pri prvoj prijavi.
 
 **Napomena:** ista vrijednost mora ići i na Vercel (vidi Korak 4 ispod) da radi i na živom sajtu, ne samo lokalno.
 

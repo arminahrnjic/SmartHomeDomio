@@ -1,17 +1,13 @@
+import Image from "next/image";
+import Link from "next/link";
 import { siteConfig } from "@/config/siteConfig";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-bg px-6 text-center">
+    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-bg px-6 py-24 text-center">
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-gradient-to-b from-bg-alt to-bg"
-      />
-
-      {/* Placeholder za hero fotografiju/CGI proizvoda dok ne budu spremni finalni materijali */}
-      <div
-        aria-hidden
-        className="absolute top-1/2 left-1/2 -z-10 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl"
       />
 
       <div className="animate-fade-in-up flex max-w-3xl flex-col items-center gap-6">
@@ -28,18 +24,35 @@ export function Hero() {
         </p>
 
         <div className="mt-4 flex flex-col gap-4 sm:flex-row">
-          <a
+          <Link
             href="/proizvodi"
             className="rounded-full bg-primary px-8 py-3.5 text-base font-medium text-white transition-all hover:scale-[1.03] hover:bg-primary-hover"
           >
             Kupi odmah
-          </a>
-          <a
+          </Link>
+          <Link
             href="/proizvodi/smart-curtain-robot"
             className="rounded-full border border-border px-8 py-3.5 text-base font-medium text-text transition-all hover:scale-[1.03] hover:bg-bg-alt"
           >
             Pogledaj proizvod
-          </a>
+          </Link>
+        </div>
+      </div>
+
+      <div className="relative mt-16 w-full max-w-xl">
+        <div
+          aria-hidden
+          className="absolute top-1/2 left-1/2 -z-10 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl"
+        />
+        <div className="relative aspect-square w-full">
+          <Image
+            src="/products/curtain-robot/1.png"
+            alt="Smart Curtain Robot"
+            fill
+            sizes="(min-width: 640px) 36rem, 90vw"
+            className="object-contain"
+            priority
+          />
         </div>
       </div>
     </section>

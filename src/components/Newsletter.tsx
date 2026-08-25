@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { submitToSheet } from "@/lib/submitToSheet";
-import { siteConfig } from "@/config/siteConfig";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
@@ -53,13 +52,7 @@ export function Newsletter() {
         )}
 
         {status === "error" && (
-          <p className="text-sm text-white/90">
-            Nešto nije uspjelo. Pokušajte ponovo ili nam pišite direktno na{" "}
-            <a href={`mailto:${siteConfig.contact.email}`} className="underline">
-              {siteConfig.contact.email}
-            </a>
-            .
-          </p>
+          <p className="text-sm text-white/90">Nešto nije uspjelo. Pokušajte ponovo.</p>
         )}
       </div>
     </section>

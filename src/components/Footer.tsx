@@ -22,12 +22,6 @@ export function Footer() {
         <div className="flex flex-col gap-3">
           <span className="text-lg font-bold tracking-tight text-text">{siteConfig.name}</span>
           <p className="max-w-xs text-sm text-text-muted">{siteConfig.tagline}</p>
-          <a
-            href={`mailto:${siteConfig.contact.email}`}
-            className="text-sm text-text-muted underline underline-offset-2 hover:text-text"
-          >
-            {siteConfig.contact.email}
-          </a>
         </div>
 
         {COLUMNS.map((column) => (

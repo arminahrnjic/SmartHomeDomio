@@ -11,12 +11,6 @@ export const siteConfig = {
     "Pametni uređaji za dom — kontrolišite rasvjetu, zavjese i sigurnost odakle god se nalazite.",
   url: SITE_URL,
   locale: "bs-BA",
-  contact: {
-    email: "info@example.com",
-  },
-  // Placeholder linkovi — zamijeniti stvarnim nalozima kad budu otvoreni.
-  social: {
-    instagram: "#",
-    tiktok: "#",
-  },
+  // Nema još mail domene ni pravih društvenih profila — dodati contact/social ovdje
+  // (i vratiti odgovarajuće linkove u Footer/AnnouncementBar/O nama) kad budu spremni.
 };

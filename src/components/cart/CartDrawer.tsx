@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { submitToSheet } from "@/lib/submitToSheet";
-import { siteConfig } from "@/config/siteConfig";
 import type { CartItem } from "@/types/cart";
 
 function itemDetails(item: CartItem) {
@@ -210,13 +209,7 @@ export function CartDrawer() {
               </form>
 
               {status === "error" && (
-                <p className="text-sm text-text-muted">
-                  Nešto nije uspjelo. Pokušajte ponovo ili nam pišite direktno na{" "}
-                  <a href={`mailto:${siteConfig.contact.email}`} className="underline">
-                    {siteConfig.contact.email}
-                  </a>
-                  .
-                </p>
+                <p className="text-sm text-text-muted">Nešto nije uspjelo. Pokušajte ponovo.</p>
               )}
             </div>
           </>
