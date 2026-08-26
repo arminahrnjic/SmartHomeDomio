@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { siteConfig } from "@/config/siteConfig";
+import { getDictionary } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locales";
 
-export function Hero() {
+export function Hero({ lang }: { lang: Locale }) {
+  const dict = getDictionary(lang);
+
   return (
     <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-bg px-6 py-24 text-center">
       <div
@@ -12,29 +15,27 @@ export function Hero() {
 
       <div className="animate-fade-in-up flex max-w-3xl flex-col items-center gap-6">
         <span className="rounded-full border border-border bg-bg-alt px-4 py-1 text-sm font-medium text-text-muted">
-          Preorder sada dostupan
+          {dict.hero.badge}
         </span>
 
         <h1 className="text-[clamp(2.5rem,5vw,4.5rem)] font-bold tracking-tight text-text">
-          Vaš dom, pametniji od danas.
+          {dict.hero.title}
         </h1>
 
-        <p className="max-w-xl text-lg text-text-muted sm:text-xl">
-          {siteConfig.description}
-        </p>
+        <p className="max-w-xl text-lg text-text-muted sm:text-xl">{dict.site.description}</p>
 
         <div className="mt-4 flex flex-col gap-4 sm:flex-row">
           <Link
-            href="/proizvodi"
+            href={`/${lang}/proizvodi`}
             className="rounded-full bg-primary px-8 py-3.5 text-base font-medium text-white transition-all hover:scale-[1.03] hover:bg-primary-hover"
           >
-            Kupi odmah
+            {dict.hero.cta1}
           </Link>
           <Link
-            href="/proizvodi/smart-curtain-robot"
+            href={`/${lang}/proizvodi/smart-curtain-robot`}
             className="rounded-full border border-border px-8 py-3.5 text-base font-medium text-text transition-all hover:scale-[1.03] hover:bg-bg-alt"
           >
-            Pogledaj proizvod
+            {dict.hero.cta2}
           </Link>
         </div>
       </div>

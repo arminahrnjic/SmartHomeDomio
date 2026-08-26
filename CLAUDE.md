@@ -86,7 +86,9 @@ Ovo je sigurnija opcija jer:
 - Izbjegava se greška u JSON formatu koja bi srušila sajt
 - Ja mogu odmah predložiti SEO-friendly slug, alt-tekstove za slike, i konzistentan format opisa
 
-**Struktura jednog proizvoda u `products.json` — sa varijantama i dodacima:**
+**Sajt je od 2026-08-26 trojezičan (BS/EN/DE)** — vidi `src/i18n/` (routing, dictionary, proxy) i sekciju "Višejezičnost (i18n)" niže. Ovo mijenja `products.json` shemu ispod: svako tekstualno polje (name, tagline, badge, short_description, svaki feature, svaki variant/option/addon label i description, specs vrijednosti, preorder_note) je sada `{ "bs": "...", "en": "...", "de": "..." }` objekat umjesto plain stringa — primjer ispod prikazuje staru (pred-i18n) shemu radi čitljivosti, stvarna trenutna shema je u `src/types/product.ts` (`Product`, `Localized`). Kad se dodaje/mijenja proizvod, sve tri jezičke varijante moraju postojati.
+
+**Struktura jednog proizvoda u `products.json` — sa varijantama i dodacima (pojednostavljeno, bez i18n omotača radi čitljivosti primjera):**
 
 Proizvod ima **varijante** (kupac bira, npr. način kontrole WiFi/Remote) i **dodatke/add-ons** (opciono, dodaju se u korpu). UI logika: sve select-ove postaviti na najbolju/najskuplju opciju po defaultu (WiFi, ne Remote), kupac svjesno "downgrade-uje" ako želi jeftinije — ne obrnuto. Cijena na stranici se live ažurira dok kupac bira varijante (kao Apple konfigurator).
 
@@ -154,6 +156,26 @@ Proizvod ima **varijante** (kupac bira, npr. način kontrole WiFi/Remote) i **do
 (Ovo je stvarni trenutni `smart-curtain-robot` — Double varijanta. Single je zaseban proizvod `smart-curtain-robot-single`, ista struktura, svoje cijene/specs/slika.)
 
 **UX napomena za stranicu proizvoda:** ispod selektora za "Način kontrole", pored Remote opcije dodati kratku napomenu koja blago potcrtava razliku bez da bude nametljivo — npr. "Bez mogućnosti kontrole na daljinu preko telefona" — da kupac razumije šta gubi, ali ne da djeluje kao pritisak na prodaju.
+
+---
+
+## Višejezičnost (i18n)
+
+Sajt podržava **bosanski (bs, default), engleski (en) i njemački (de)** — dodano 2026-08-26 pošto sajt trenutno nema domenu/email i služi kao lična test/learning stranica, ne kao komercijalni launch (vidi napomenu o statusu launcha na kraju ovog fajla ili u project memory).
+
+**Routing:** sve stranice žive pod `src/app/[lang]/...` (App Router dinamički segment), npr. `/en/proizvodi/smart-curtain-robot`. `src/proxy.ts` (Next.js 16 preimenovao Middleware u **Proxy** — isti koncept, novo ime/fajl) presreće zahtjeve bez jezičkog prefiksa, čita `Accept-Language` header i redirektuje na odgovarajući `/bs`, `/en` ili `/de` (fallback `bs`). Korijenski layout je `src/app/[lang]/layout.tsx` (ima `<html lang>`) — `favicon.ico`, `robots.ts` i `sitemap.ts` ostaju izvan `[lang]` na `src/app/` nivou jer moraju biti jezički-neutralni/globalni.
+
+**Prevodi:**
+- UI stringovi (nav, footer, dugmad, cart, forme, "Zašto mi"/"Kako funkcioniše" sekcije, itd.) žive u `src/i18n/dictionary.ts` — jedan TS objekat po jeziku, tipiziran `Dictionary` interfejsom (TS greška ako nedostaje ključ u bilo kojem jeziku). Komponente (server i client) primaju `lang: Locale` prop i pozivaju `getDictionary(lang)` lokalno — dictionary nije server-only, sigurno je importovati i u client komponente.
+- Tekst proizvoda (`data/products.json`) — vidi napomenu u sekciji "Struktura jednog proizvoda" iznad: svako tekstualno polje je `Localized` (`{ bs, en, de }`).
+- Blog članci: `content/blog/{bs,en,de}/{slug}.md` — isti slug u sva tri foldera za jedan članak (nije prevedeni slug u URL-u, samo sadržaj). `src/lib/blog.ts` (`getAllPosts(locale)`, `getPostBySlug(slug, locale)`) čita iz odgovarajućeg foldera.
+- O nama i 3 pravne stranice (Uslovi/Privatnost/Povrat): prevodi su lokalni `CONTENT: Record<Locale, {...}>` objekti unutar svakog page fajla (nisu u centralnom dictionary-ju jer su jednokratni/dugi blokovi teksta).
+
+**Language switcher:** `src/components/LanguageSwitcher.tsx` (client, u Header-u) — `<select>` koji mijenja samo `[lang]` segment trenutne putanje (`withLocale()` iz `src/i18n/locales.ts`), ostatak URL-a (npr. `/proizvodi/smart-curtain-robot`) ostaje isti.
+
+**Valuta po jeziku (dodano 2026-08-26):** KM (BAM) ostaje jedina prava/kanonska cijena — u `products.json`, u cart state-u (`CartContext`), i u onome što se šalje u Google Sheet (`submitToSheet`). Prikaz na stranici se, samo za display, konvertuje po jeziku: bs → KM (bez decimala, kao i do sada), en → USD, de → EUR. Logika je u `src/i18n/currency.ts` (`formatPrice`, `formatPriceDelta`) — koristi se svugdje gdje se cijena renderuje (VariantSelector, ProductCard, CartDrawer), nikad ne renderovati `{cijena} KM` ručno za tekst koji zavisi od `lang`. KM→EUR je fiksan i pouzdan (1 EUR = 1,95583 KM, valutni odbor BiH, zakonski fiksirano, nikad se ne mijenja) — EUR→USD je tržišni kurs, snapshot uzet 2026-08-26 (~1,1673), NIJE live/auto-ažuriran; ako prikazane USD cijene s vremenom vidno odstupe od tržišta, ažurirati `USD_PER_EUR` konstantu u `currency.ts` istom metodom (WebSearch trenutni EUR/USD kurs) kao i za landed-cost kalkulacije iznad. Uslovi korištenja (`/uslovi-koristenja`, sva 3 jezika) eksplicitno objašnjavaju da je KM zvanična cijena, a USD/EUR prikaz je informativni preračun — ne mijenjati taj tekst a da se ne uskladi sa stvarnim ponašanjem sajta.
+
+**Kad se dodaje novi tekst na sajtu** (nova sekcija, novo dugme, novi proizvod, novi blog post): mora postojati sva tri jezika prije nego što se smatra gotovim — ne ostavljati samo bosanski i planirati "dodati kasnije". Armina i dalje opisuje stvari samo na bosanskom (ne treba sama prevoditi) — prevod na EN/DE je na Claude-u kao dio istog workflow-a iz sekcije "Workflow: kako se dodaju/mijenjaju proizvodi" iznad.
 
 ---
 

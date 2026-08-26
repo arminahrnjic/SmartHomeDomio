@@ -3,18 +3,24 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Product } from "@/types/product";
 import { useCart } from "@/context/CartContext";
+import { getDictionary } from "@/i18n/dictionary";
+import { t, type Locale } from "@/i18n/locales";
+import { formatPrice, formatPriceDelta } from "@/i18n/currency";
 
 export function VariantSelector({
   product,
   image,
+  lang,
   selectedOptions,
   onSelectOption,
 }: {
   product: Product;
   image?: string;
+  lang: Locale;
   selectedOptions: Record<string, string>;
   onSelectOption: (groupId: string, optionId: string) => void;
 }) {
+  const dict = getDictionary(lang);
   const { addItem, openCart } = useCart();
 
   const [addonChecked, setAddonChecked] = useState<Record<string, boolean>>(() =>
@@ -36,21 +42,21 @@ export function VariantSelector({
           group.options.find((o) => o.id === selectedOptions[group.id]) ?? group.options[0];
         return {
           groupId: group.id,
-          groupLabel: group.label,
+          groupLabel: t(group.label, lang),
           optionId: option.id,
-          optionLabel: option.label,
+          optionLabel: t(option.label, lang),
           price: option.price_km ?? option.price_modifier_km ?? 0,
         };
       }),
-    [product.variant_groups, selectedOptions]
+    [product.variant_groups, selectedOptions, lang]
   );
 
   const selectedAddons = useMemo(
     () =>
       product.addons
         .filter((addon) => addonChecked[addon.id])
-        .map((addon) => ({ addonId: addon.id, label: addon.label, price: addon.price_km })),
-    [product.addons, addonChecked]
+        .map((addon) => ({ addonId: addon.id, label: t(addon.label, lang), price: addon.price_km })),
+    [product.addons, addonChecked, lang]
   );
 
   const unitPrice = useMemo(
@@ -64,7 +70,7 @@ export function VariantSelector({
     addItem(
       {
         productId: product.id,
-        productName: product.name,
+        productName: t(product.name, lang),
         image,
         selections,
         addons: selectedAddons,
@@ -83,17 +89,17 @@ export function VariantSelector({
 
         return (
           <div key={group.id} className="flex flex-col gap-3">
-            <span className="text-sm font-semibold text-text">{group.label}</span>
+            <span className="text-sm font-semibold text-text">{t(group.label, lang)}</span>
             <div className="flex flex-col gap-3 sm:flex-row">
               {group.options.map((option) => {
                 const selected = option.id === selectedOptions[group.id];
                 const isRecommended = option.recommended;
                 const priceLabel =
                   option.price_km !== undefined
-                    ? `${option.price_km} KM`
+                    ? formatPrice(option.price_km, lang)
                     : option.price_modifier_km
-                      ? `+${option.price_modifier_km} KM`
-                      : "Uključeno";
+                      ? formatPriceDelta(option.price_modifier_km, lang)
+                      : dict.product.included;
 
                 return (
                   <button
@@ -112,20 +118,22 @@ export function VariantSelector({
                   >
                     {isRecommended && (
                       <span className="absolute -top-2.5 left-4 rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                        Preporučeno
+                        {dict.product.recommended}
                       </span>
                     )}
                     <span
                       className={`text-sm font-semibold ${isRecommended ? "text-text" : "text-text-muted"}`}
                     >
-                      {option.label}
+                      {t(option.label, lang)}
                     </span>
                     {option.sublabel && (
-                      <span className="text-xs text-text-muted">{option.sublabel}</span>
+                      <span className="text-xs text-text-muted">{t(option.sublabel, lang)}</span>
                     )}
                     <span className="mt-1 text-sm font-medium text-text">{priceLabel}</span>
                     {!isRecommended && groupHasRecommended && option.downgrade_note && (
-                      <span className="text-xs text-text-muted/80">{option.downgrade_note}</span>
+                      <span className="text-xs text-text-muted/80">
+                        {t(option.downgrade_note, lang)}
+                      </span>
                     )}
                   </button>
                 );
@@ -152,10 +160,12 @@ export function VariantSelector({
               />
               <span className="flex flex-col gap-0.5">
                 <span className="text-sm font-semibold text-text">
-                  {addon.label}{" "}
-                  <span className="font-normal text-text-muted">+{addon.price_km} KM</span>
+                  {t(addon.label, lang)}{" "}
+                  <span className="font-normal text-text-muted">
+                    {formatPriceDelta(addon.price_km, lang)}
+                  </span>
                 </span>
-                <span className="text-xs text-text-muted">{addon.description}</span>
+                <span className="text-xs text-text-muted">{t(addon.description, lang)}</span>
               </span>
             </label>
           ))}
@@ -166,24 +176,26 @@ export function VariantSelector({
         <div className="flex flex-col gap-1">
           <div className="flex items-baseline justify-between">
             <span className="text-sm text-text-muted">
-              {quantity > 1 ? "Ukupno" : "Cijena po komadu"}
+              {quantity > 1 ? dict.product.total : dict.product.pricePerUnit}
             </span>
             <span className="text-3xl font-bold tracking-tight text-text">
-              {unitPrice * quantity} KM
+              {formatPrice(unitPrice * quantity, lang)}
             </span>
           </div>
           {quantity > 1 && (
-            <span className="text-right text-xs text-text-muted">{unitPrice} KM po komadu</span>
+            <span className="text-right text-xs text-text-muted">
+              {formatPrice(unitPrice, lang)} {dict.product.pricePerUnitSuffix}
+            </span>
           )}
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-text-muted">Količina</span>
+          <span className="text-sm text-text-muted">{dict.product.quantity}</span>
           <div className="flex items-center gap-4 rounded-full border border-border px-3 py-2">
             <button
               type="button"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              aria-label="Smanji količinu"
+              aria-label={dict.product.decreaseAria}
               className="flex h-5 w-5 items-center justify-center text-text-muted hover:text-text"
             >
               −
@@ -192,7 +204,7 @@ export function VariantSelector({
             <button
               type="button"
               onClick={() => setQuantity((q) => q + 1)}
-              aria-label="Povećaj količinu"
+              aria-label={dict.product.increaseAria}
               className="flex h-5 w-5 items-center justify-center text-text-muted hover:text-text"
             >
               +
@@ -205,11 +217,11 @@ export function VariantSelector({
           onClick={handleAddToCart}
           className="w-full rounded-full bg-primary px-8 py-3.5 text-base font-medium text-white transition-all hover:scale-[1.01] hover:bg-primary-hover"
         >
-          {justAdded ? "Dodano u korpu ✓" : "Dodaj u korpu"}
+          {justAdded ? dict.product.added : dict.product.addToCart}
         </button>
 
         {product.preorder_note && (
-          <p className="text-xs text-text-muted">{product.preorder_note}</p>
+          <p className="text-xs text-text-muted">{t(product.preorder_note, lang)}</p>
         )}
       </div>
     </div>

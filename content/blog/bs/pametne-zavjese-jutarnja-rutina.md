@@ -27,4 +27,4 @@ Motor radi tiho, dovoljno tiho da ne probudi nikog prije vremena, dovoljno brzo 
 
 Aplikacija i glasovna kontrola znače da promjena rasporeda traje par sekundi — bez alata, bez pozivanja majstora.
 
-Ako jutra u vašem domu često počinju u žurbi, [Smart Curtain Robot](/proizvodi/smart-curtain-robot) je mali korak koji to mijenja bez velike promjene navika.
+Ako jutra u vašem domu često počinju u žurbi, [Smart Curtain Robot](/bs/proizvodi/smart-curtain-robot) je mali korak koji to mijenja bez velike promjene navika.

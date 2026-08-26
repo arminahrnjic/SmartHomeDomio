@@ -23,4 +23,4 @@ Ako se upravlja sa više apartmana, isti nalog i aplikacija pokrivaju sve — be
 
 Montaža ide direktno na postojeću šinu, bez bušenja zida — pogodno i za iznajmljene prostore gdje se ne smiju raditi trajne izmjene.
 
-Za apartmane i vikendice gdje fizičko prisustvo nije uvijek moguće, [Smart Curtain Robot](/proizvodi/smart-curtain-robot) sa WiFi kontrolom rješava tačno taj problem.
+Za apartmane i vikendice gdje fizičko prisustvo nije uvijek moguće, [Smart Curtain Robot](/bs/proizvodi/smart-curtain-robot) sa WiFi kontrolom rješava tačno taj problem.

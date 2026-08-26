@@ -6,6 +6,9 @@ import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { submitToSheet } from "@/lib/submitToSheet";
 import type { CartItem } from "@/types/cart";
+import { getDictionary } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locales";
+import { formatPrice } from "@/i18n/currency";
 
 function itemDetails(item: CartItem) {
   const variants = item.selections.map((s) => s.optionLabel).join(", ");
@@ -13,7 +16,8 @@ function itemDetails(item: CartItem) {
   return { variants, addons };
 }
 
-export function CartDrawer() {
+export function CartDrawer({ lang }: { lang: Locale }) {
+  const dict = getDictionary(lang);
   const { items, isOpen, closeCart, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -89,17 +93,17 @@ export function CartDrawer() {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Korpa"
+        aria-label={dict.cart.title}
         className={`absolute top-0 right-0 flex h-full w-full max-w-md flex-col bg-bg shadow-2xl transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between border-b border-border px-6 py-5">
-          <h2 className="text-lg font-semibold text-text">Korpa</h2>
+          <h2 className="text-lg font-semibold text-text">{dict.cart.title}</h2>
           <button
             type="button"
             onClick={closeCart}
-            aria-label="Zatvori korpu"
+            aria-label={dict.cart.closeAria}
             className="text-text-muted transition-colors hover:text-text"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -110,18 +114,18 @@ export function CartDrawer() {
 
         {status === "success" ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-            <p className="text-base font-medium text-text">Hvala! Narudžba je zabilježena.</p>
-            <p className="text-sm text-text-muted">Javićemo vam se na {email} uskoro.</p>
+            <p className="text-base font-medium text-text">{dict.cart.thankYou}</p>
+            <p className="text-sm text-text-muted">{dict.cart.willContact.replace("{email}", email)}</p>
           </div>
         ) : items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
-            <p className="text-sm text-text-muted">Korpa je prazna.</p>
+            <p className="text-sm text-text-muted">{dict.cart.empty}</p>
             <Link
-              href="/proizvodi"
+              href={`/${lang}/proizvodi`}
               onClick={closeCart}
               className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-white transition-transform hover:scale-[1.03]"
             >
-              Pogledaj proizvode
+              {dict.cart.browse}
             </Link>
           </div>
         ) : (
@@ -152,7 +156,7 @@ export function CartDrawer() {
                           <button
                             type="button"
                             onClick={() => removeItem(item.cartItemId)}
-                            aria-label="Ukloni iz korpe"
+                            aria-label={dict.cart.removeAria}
                             className="text-text-muted transition-colors hover:text-text"
                           >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -169,7 +173,7 @@ export function CartDrawer() {
                             <button
                               type="button"
                               onClick={() => updateQuantity(item.cartItemId, item.quantity - 1)}
-                              aria-label="Smanji količinu"
+                              aria-label={dict.cart.decreaseAria}
                               className="flex h-5 w-5 items-center justify-center text-text-muted hover:text-text"
                             >
                               −
@@ -178,14 +182,14 @@ export function CartDrawer() {
                             <button
                               type="button"
                               onClick={() => updateQuantity(item.cartItemId, item.quantity + 1)}
-                              aria-label="Povećaj količinu"
+                              aria-label={dict.cart.increaseAria}
                               className="flex h-5 w-5 items-center justify-center text-text-muted hover:text-text"
                             >
                               +
                             </button>
                           </div>
                           <span className="text-sm font-semibold text-text">
-                            {item.unitPrice * item.quantity} KM
+                            {formatPrice(item.unitPrice * item.quantity, lang)}
                           </span>
                         </div>
                       </div>
@@ -197,8 +201,10 @@ export function CartDrawer() {
 
             <div className="flex flex-col gap-4 border-t border-border px-6 py-5">
               <div className="flex items-baseline justify-between">
-                <span className="text-sm text-text-muted">Ukupno</span>
-                <span className="text-2xl font-bold tracking-tight text-text">{totalPrice} KM</span>
+                <span className="text-sm text-text-muted">{dict.cart.subtotal}</span>
+                <span className="text-2xl font-bold tracking-tight text-text">
+                  {formatPrice(totalPrice, lang)}
+                </span>
               </div>
 
               <form onSubmit={handleCheckout} className="flex flex-col gap-3">
@@ -207,8 +213,8 @@ export function CartDrawer() {
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="Vaš email (za potvrdu narudžbe)"
-                  aria-label="Email adresa"
+                  placeholder={dict.cart.emailPlaceholder}
+                  aria-label={dict.cart.emailAria}
                   className="w-full rounded-full border border-border bg-bg px-5 py-3.5 text-base text-text outline-none placeholder:text-text-muted"
                 />
                 <button
@@ -216,12 +222,12 @@ export function CartDrawer() {
                   disabled={status === "loading"}
                   className="w-full rounded-full bg-primary px-8 py-3.5 text-base font-medium text-white transition-all hover:scale-[1.01] hover:bg-primary-hover disabled:opacity-70"
                 >
-                  {status === "loading" ? "Šaljem..." : "Naruči (Preorder)"}
+                  {status === "loading" ? dict.cart.submitting : dict.cart.submit}
                 </button>
               </form>
 
               {status === "error" && (
-                <p className="text-sm text-text-muted">Nešto nije uspjelo. Pokušajte ponovo.</p>
+                <p className="text-sm text-text-muted">{dict.cart.error}</p>
               )}
             </div>
           </>

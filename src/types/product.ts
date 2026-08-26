@@ -1,42 +1,44 @@
+import type { Localized } from "@/i18n/locales";
+
 export interface VariantOption {
   id: string;
-  label: string;
-  sublabel?: string;
+  label: Localized;
+  sublabel?: Localized;
   price_km?: number;
   price_modifier_km?: number;
   recommended?: boolean;
-  downgrade_note?: string;
+  downgrade_note?: Localized;
   images?: string[];
 }
 
 export interface VariantGroup {
   id: string;
-  label: string;
+  label: Localized;
   default: string;
   options: VariantOption[];
 }
 
 export interface Addon {
   id: string;
-  label: string;
-  description: string;
+  label: Localized;
+  description: Localized;
   price_km: number;
   default_checked: boolean;
 }
 
 export interface Product {
   id: string;
-  name: string;
-  tagline: string;
-  badge?: string;
-  short_description: string;
-  features: string[];
+  name: Localized;
+  tagline: Localized;
+  badge?: Localized;
+  short_description: Localized;
+  features: Localized[];
   variant_groups: VariantGroup[];
   addons: Addon[];
-  specs: Record<string, string>;
+  specs: Record<string, Localized>;
   images: string[];
   status: "preorder" | "available" | "coming-soon";
-  preorder_note?: string;
+  preorder_note?: Localized;
 }
 
 export function getStartingPrice(product: Product): number {

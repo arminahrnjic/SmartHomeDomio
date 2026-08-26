@@ -1,11 +1,16 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/config/siteConfig";
+import { getDictionary } from "@/i18n/dictionary";
+import { isLocale } from "@/i18n/locales";
 
 export const alt = siteConfig.name;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const tagline = isLocale(lang) ? getDictionary(lang).site.tagline : siteConfig.name;
+
   return new ImageResponse(
     (
       <div
@@ -30,9 +35,7 @@ export default function Image() {
         >
           {siteConfig.name}
         </div>
-        <div style={{ fontSize: 34, color: "rgba(255,255,255,0.85)" }}>
-          {siteConfig.tagline}
-        </div>
+        <div style={{ fontSize: 34, color: "rgba(255,255,255,0.85)" }}>{tagline}</div>
       </div>
     ),
     { ...size }

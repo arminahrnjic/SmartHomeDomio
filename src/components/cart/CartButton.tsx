@@ -1,15 +1,18 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
+import { getDictionary } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locales";
 
-export function CartButton() {
+export function CartButton({ lang }: { lang: Locale }) {
   const { totalItems, openCart } = useCart();
+  const dict = getDictionary(lang);
 
   return (
     <button
       type="button"
       onClick={openCart}
-      aria-label="Korpa"
+      aria-label={dict.header.cartAria}
       className="relative text-text-muted transition-colors hover:text-text"
     >
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">

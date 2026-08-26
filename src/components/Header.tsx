@@ -1,23 +1,28 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/siteConfig";
+import { getDictionary } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locales";
 import { CartButton } from "@/components/cart/CartButton";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
-const NAV_LINKS = [
-  { href: "/proizvodi", label: "Proizvodi" },
-  { href: "/o-nama", label: "O nama" },
-  { href: "/#blog", label: "Blog" },
-];
+export function Header({ lang }: { lang: Locale }) {
+  const dict = getDictionary(lang);
 
-export function Header() {
+  const navLinks = [
+    { href: `/${lang}/proizvodi`, label: dict.nav.products },
+    { href: `/${lang}/o-nama`, label: dict.nav.about },
+    { href: `/${lang}#blog`, label: dict.nav.blog },
+  ];
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <Link href="/" className="text-lg font-bold tracking-tight text-text">
+        <Link href={`/${lang}`} className="text-lg font-bold tracking-tight text-text">
           {siteConfig.name}
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -29,7 +34,8 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <CartButton />
+          <LanguageSwitcher lang={lang} />
+          <CartButton lang={lang} />
         </div>
       </div>
     </header>

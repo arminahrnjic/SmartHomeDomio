@@ -6,6 +6,8 @@ import products from "@data/products.json";
 import type { Product } from "@/types/product";
 import { ProductPurchasePanel } from "@/components/product/ProductPurchasePanel";
 import { siteConfig } from "@/config/siteConfig";
+import { getDictionary } from "@/i18n/dictionary";
+import { locales, isLocale, ogLocale, t } from "@/i18n/locales";
 
 const ALL_PRODUCTS = products as unknown as Product[];
 
@@ -34,37 +36,40 @@ function withExistingImages(product: Product): Product {
 }
 
 export function generateStaticParams() {
-  return ALL_PRODUCTS.map((product) => ({ id: product.id }));
+  return locales.flatMap((lang) => ALL_PRODUCTS.map((product) => ({ lang, id: product.id })));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { lang, id } = await params;
+  if (!isLocale(lang)) return {};
   const product = getProduct(id);
   if (!product) return {};
 
+  const name = t(product.name, lang);
+  const description = t(product.short_description, lang);
   const images = getExistingImages(product.images);
   // Nema pravih fotografija za ovaj proizvod jos -> koristi generisanu brend OG sliku sa root nivoa.
-  const ogImages = images.length > 0 ? images : ["/opengraph-image"];
+  const ogImages = images.length > 0 ? images : [`/${lang}/opengraph-image`];
 
   return {
-    title: product.name,
-    description: product.short_description,
+    title: name,
+    description,
     openGraph: {
       type: "website",
-      locale: "bs_BA",
+      locale: ogLocale[lang],
       siteName: siteConfig.name,
-      title: product.name,
-      description: product.short_description,
+      title: name,
+      description,
       images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
-      title: product.name,
-      description: product.short_description,
+      title: name,
+      description,
       images: ogImages,
     },
   };
@@ -73,9 +78,11 @@ export async function generateMetadata({
 export default async function ProductPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }) {
-  const { id } = await params;
+  const { lang, id } = await params;
+  if (!isLocale(lang)) notFound();
+  const dict = getDictionary(lang);
   const product = getProduct(id);
 
   if (!product) {
@@ -88,25 +95,25 @@ export default async function ProductPage({
     <main className="flex flex-1 flex-col">
       <section className="w-full px-6 py-16">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-16 lg:grid-cols-2">
-          <ProductPurchasePanel product={displayProduct} images={displayProduct.images}>
+          <ProductPurchasePanel product={displayProduct} images={displayProduct.images} lang={lang}>
             {product.badge && (
               <span className="w-fit rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white">
-                {product.badge}
+                {t(product.badge, lang)}
               </span>
             )}
             <div className="flex flex-col gap-3">
               <h1 className="text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-text">
-                {product.name}
+                {t(product.name, lang)}
               </h1>
-              <p className="text-lg text-text-muted">{product.tagline}</p>
-              <p className="text-base text-text-muted">{product.short_description}</p>
+              <p className="text-lg text-text-muted">{t(product.tagline, lang)}</p>
+              <p className="text-base text-text-muted">{t(product.short_description, lang)}</p>
             </div>
 
             <ul className="flex flex-col gap-2">
               {product.features.map((feature) => (
-                <li key={feature} className="flex gap-2 text-sm text-text">
+                <li key={t(feature, lang)} className="flex gap-2 text-sm text-text">
                   <span className="text-primary">✓</span>
-                  {feature}
+                  {t(feature, lang)}
                 </li>
               ))}
             </ul>
@@ -116,12 +123,14 @@ export default async function ProductPage({
 
       <section className="w-full bg-bg-alt px-6 py-16">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-8 text-xl font-semibold text-text">Specifikacije</h2>
+          <h2 className="mb-8 text-xl font-semibold text-text">{dict.product.specsHeading}</h2>
           <dl className="grid grid-cols-1 gap-x-12 gap-y-4 sm:grid-cols-2">
             {Object.entries(product.specs).map(([key, value]) => (
               <div key={key} className="flex justify-between gap-4 border-b border-border pb-3">
-                <dt className="text-sm text-text-muted capitalize">{key.replace(/_/g, " ")}</dt>
-                <dd className="text-sm font-medium text-text">{value}</dd>
+                <dt className="text-sm text-text-muted capitalize">
+                  {dict.specsLabels[key] ?? key.replace(/_/g, " ")}
+                </dt>
+                <dd className="text-sm font-medium text-text">{t(value, lang)}</dd>
               </div>
             ))}
           </dl>

@@ -1,13 +1,18 @@
 import { ImageResponse } from "next/og";
 import { getPostBySlug } from "@/lib/blog";
 import { siteConfig } from "@/config/siteConfig";
+import { isLocale } from "@/i18n/locales";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+export default async function Image({
+  params,
+}: {
+  params: Promise<{ lang: string; slug: string }>;
+}) {
+  const { lang, slug } = await params;
+  const post = isLocale(lang) ? getPostBySlug(slug, lang) : undefined;
   const title = post?.title ?? siteConfig.name;
 
   return new ImageResponse(

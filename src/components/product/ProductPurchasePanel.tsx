@@ -2,16 +2,19 @@
 
 import { useMemo, useState } from "react";
 import type { Product } from "@/types/product";
+import { t, type Locale } from "@/i18n/locales";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { VariantSelector } from "@/components/product/VariantSelector";
 
 export function ProductPurchasePanel({
   product,
   images,
+  lang,
   children,
 }: {
   product: Product;
   images: string[];
+  lang: Locale;
   children?: React.ReactNode;
 }) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(() =>
@@ -28,13 +31,14 @@ export function ProductPurchasePanel({
 
   return (
     <>
-      <ProductGallery images={currentImages} alt={product.name} />
+      <ProductGallery images={currentImages} alt={t(product.name, lang)} lang={lang} />
 
       <div className="flex flex-col gap-6">
         {children}
         <VariantSelector
           product={product}
           image={currentImages[0]}
+          lang={lang}
           selectedOptions={selectedOptions}
           onSelectOption={(groupId, optionId) =>
             setSelectedOptions((prev) => ({ ...prev, [groupId]: optionId }))

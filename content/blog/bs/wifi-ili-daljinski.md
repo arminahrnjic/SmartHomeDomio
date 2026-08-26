@@ -23,4 +23,4 @@ Bez WiFi varijante nema kontrole na daljinu preko telefona, nema rasporeda, nema
 
 Pitanje nije "koja je bolja" nego "gdje se zavjese nalaze". Za spavaću sobu u kojoj ste svaki dan, daljinski može biti dovoljan. Za sve ostalo — pogotovo prostore gdje niste stalno prisutni — WiFi varijanta je ta koja rješava stvarni problem.
 
-Obje varijante birate direktno na [stranici proizvoda](/proizvodi/smart-curtain-robot), gdje se cijena ažurira odmah dok birate.
+Obje varijante birate direktno na [stranici proizvoda](/bs/proizvodi/smart-curtain-robot), gdje se cijena ažurira odmah dok birate.

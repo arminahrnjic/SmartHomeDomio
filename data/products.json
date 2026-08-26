@@ -1,36 +1,80 @@
 [
   {
     "id": "smart-curtain-robot",
-    "name": "Smart Curtain Robot",
-    "tagline": "Automatski otvarajte i zatvarajte zavjese",
-    "badge": "BESTSELLER",
-    "short_description": "Pretvorite obične zavjese u pametne. Radi na Roman rod i track rod šinama.",
+    "name": { "bs": "Smart Curtain Robot", "en": "Smart Curtain Robot", "de": "Smart Curtain Robot" },
+    "tagline": {
+      "bs": "Automatski otvarajte i zatvarajte zavjese",
+      "en": "Automatically open and close your curtains",
+      "de": "Öffnen und schließen Sie Ihre Vorhänge automatisch"
+    },
+    "badge": { "bs": "BESTSELLER", "en": "BESTSELLER", "de": "BESTSELLER" },
+    "short_description": {
+      "bs": "Pretvorite obične zavjese u pametne. Radi na Roman rod i track rod šinama.",
+      "en": "Turn ordinary curtains into smart ones. Works with Roman rod and track rod rails.",
+      "de": "Machen Sie aus gewöhnlichen Vorhängen smarte Vorhänge. Funktioniert mit Römerstab- und Schienensystemen."
+    },
     "features": [
-      "Mobilna aplikacija i glasovna kontrola (Alexa, Google Home) — WiFi varijanta",
-      "Tiho otvaranje, brzina 10 sec/metar",
-      "Baterija do 6 mjeseci rada, odvojiva, Type-C punjenje",
-      "Kompatibilan s većinom šina"
+      {
+        "bs": "Mobilna aplikacija i glasovna kontrola (Alexa, Google Home) — WiFi varijanta",
+        "en": "Mobile app and voice control (Alexa, Google Home) — WiFi variant",
+        "de": "Mobile App und Sprachsteuerung (Alexa, Google Home) — WiFi-Variante"
+      },
+      {
+        "bs": "Tiho otvaranje, brzina 10 sec/metar",
+        "en": "Quiet operation, speed 10 sec/meter",
+        "de": "Leiser Betrieb, Geschwindigkeit 10 Sek./Meter"
+      },
+      {
+        "bs": "Baterija do 6 mjeseci rada, odvojiva, Type-C punjenje",
+        "en": "Battery lasts up to 6 months, removable, Type-C charging",
+        "de": "Akku hält bis zu 6 Monate, herausnehmbar, Type-C-Ladung"
+      },
+      {
+        "bs": "Kompatibilan s većinom šina",
+        "en": "Compatible with most curtain rails",
+        "de": "Kompatibel mit den meisten Vorhangschienen"
+      }
     ],
     "variant_groups": [
       {
         "id": "control",
-        "label": "Način kontrole",
+        "label": { "bs": "Način kontrole", "en": "Control method", "de": "Steuerungsart" },
         "default": "wifi",
         "options": [
           {
             "id": "wifi",
-            "label": "Puna kontrola (App + Glas)",
-            "sublabel": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
+            "label": {
+              "bs": "Puna kontrola (App + Glas)",
+              "en": "Full control (App + Voice)",
+              "de": "Volle Kontrolle (App + Sprache)"
+            },
+            "sublabel": {
+              "bs": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
+              "en": "Control from wherever you are — phone, Alexa, Google Home",
+              "de": "Steuern Sie von überall aus — Telefon, Alexa, Google Home"
+            },
             "price_km": 339,
             "recommended": true
           },
           {
             "id": "remote",
-            "label": "Osnovna kontrola (Daljinski)",
-            "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
+            "label": {
+              "bs": "Osnovna kontrola (Daljinski)",
+              "en": "Basic control (Remote)",
+              "de": "Grundsteuerung (Fernbedienung)"
+            },
+            "sublabel": {
+              "bs": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
+              "en": "Physical remote control only, no app/WiFi features",
+              "de": "Nur physische Fernbedienung, keine App-/WiFi-Funktionen"
+            },
             "price_km": 259,
             "recommended": false,
-            "downgrade_note": "Bez mogućnosti kontrole na daljinu preko telefona"
+            "downgrade_note": {
+              "bs": "Bez mogućnosti kontrole na daljinu preko telefona",
+              "en": "No remote control via phone",
+              "de": "Keine Fernsteuerung per Telefon möglich"
+            }
           }
         ]
       }
@@ -38,54 +82,114 @@
     "addons": [
       {
         "id": "solar-panel",
-        "label": "Solarni punjač",
-        "description": "Automatsko punjenje robota preko sunca — nikad ne brinete o bateriji.",
+        "label": { "bs": "Solarni punjač", "en": "Solar charger", "de": "Solarladegerät" },
+        "description": {
+          "bs": "Automatsko punjenje robota preko sunca — nikad ne brinete o bateriji.",
+          "en": "Automatic solar charging for the robot — never worry about the battery again.",
+          "de": "Automatisches Laden des Roboters über Sonnenenergie — nie wieder Sorgen um den Akku."
+        },
         "price_km": 39,
         "default_checked": false
       }
     ],
     "specs": {
-      "dimensions": "170 x 86 x 55mm",
-      "power": "12W",
-      "battery": "4000mAh, odvojiva, punjenje Type-C",
-      "max_stroke": "20m",
-      "app": "Tuya / Smart Life"
+      "dimensions": { "bs": "170 x 86 x 55mm", "en": "170 x 86 x 55mm", "de": "170 x 86 x 55mm" },
+      "power": { "bs": "12W", "en": "12W", "de": "12W" },
+      "battery": {
+        "bs": "4000mAh, odvojiva, punjenje Type-C",
+        "en": "4000mAh, removable, Type-C charging",
+        "de": "4000mAh, herausnehmbar, Type-C-Ladung"
+      },
+      "max_stroke": { "bs": "20m", "en": "20m", "de": "20m" },
+      "app": { "bs": "Tuya / Smart Life", "en": "Tuya / Smart Life", "de": "Tuya / Smart Life" }
     },
     "images": ["/products/curtain-robot/1.png"],
     "status": "preorder",
-    "preorder_note": "Sljedeća grupa narudžbi zatvara se uskoro. Isporuka 10-15 dana nakon slanja iz fabrike."
+    "preorder_note": {
+      "bs": "Sljedeća grupa narudžbi zatvara se uskoro. Isporuka 10-15 dana nakon slanja iz fabrike.",
+      "en": "The next order batch closes soon. Delivery 10-15 days after shipping from the factory.",
+      "de": "Die nächste Bestellcharge schließt bald. Lieferung 10-15 Tage nach Versand ab Werk."
+    }
   },
   {
     "id": "smart-curtain-robot-single",
-    "name": "Smart Curtain Robot Single",
-    "tagline": "Automatski otvarajte i zatvarajte jednu zavjesu",
-    "short_description": "Pretvorite jednu zavjesu u pametnu. Radi na Roman rod i track rod šinama.",
+    "name": {
+      "bs": "Smart Curtain Robot Single",
+      "en": "Smart Curtain Robot Single",
+      "de": "Smart Curtain Robot Single"
+    },
+    "tagline": {
+      "bs": "Automatski otvarajte i zatvarajte jednu zavjesu",
+      "en": "Automatically open and close a single curtain",
+      "de": "Öffnen und schließen Sie einen einzelnen Vorhang automatisch"
+    },
+    "short_description": {
+      "bs": "Pretvorite jednu zavjesu u pametnu. Radi na Roman rod i track rod šinama.",
+      "en": "Turn a single curtain into a smart one. Works with Roman rod and track rod rails.",
+      "de": "Machen Sie aus einem einzelnen Vorhang einen smarten Vorhang. Funktioniert mit Römerstab- und Schienensystemen."
+    },
     "features": [
-      "Mobilna aplikacija i glasovna kontrola (Alexa, Google Home) — WiFi varijanta",
-      "Tiho otvaranje, brzina 10 sec/metar",
-      "Baterija do 6 mjeseci rada, odvojiva, Type-C punjenje",
-      "Kompatibilan s većinom šina"
+      {
+        "bs": "Mobilna aplikacija i glasovna kontrola (Alexa, Google Home) — WiFi varijanta",
+        "en": "Mobile app and voice control (Alexa, Google Home) — WiFi variant",
+        "de": "Mobile App und Sprachsteuerung (Alexa, Google Home) — WiFi-Variante"
+      },
+      {
+        "bs": "Tiho otvaranje, brzina 10 sec/metar",
+        "en": "Quiet operation, speed 10 sec/meter",
+        "de": "Leiser Betrieb, Geschwindigkeit 10 Sek./Meter"
+      },
+      {
+        "bs": "Baterija do 6 mjeseci rada, odvojiva, Type-C punjenje",
+        "en": "Battery lasts up to 6 months, removable, Type-C charging",
+        "de": "Akku hält bis zu 6 Monate, herausnehmbar, Type-C-Ladung"
+      },
+      {
+        "bs": "Kompatibilan s većinom šina",
+        "en": "Compatible with most curtain rails",
+        "de": "Kompatibel mit den meisten Vorhangschienen"
+      }
     ],
     "variant_groups": [
       {
         "id": "control",
-        "label": "Način kontrole",
+        "label": { "bs": "Način kontrole", "en": "Control method", "de": "Steuerungsart" },
         "default": "wifi",
         "options": [
           {
             "id": "wifi",
-            "label": "Puna kontrola (App + Glas)",
-            "sublabel": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
+            "label": {
+              "bs": "Puna kontrola (App + Glas)",
+              "en": "Full control (App + Voice)",
+              "de": "Volle Kontrolle (App + Sprache)"
+            },
+            "sublabel": {
+              "bs": "Kontrolišite odakle god se nalazite — telefon, Alexa, Google Home",
+              "en": "Control from wherever you are — phone, Alexa, Google Home",
+              "de": "Steuern Sie von überall aus — Telefon, Alexa, Google Home"
+            },
             "price_km": 179,
             "recommended": true
           },
           {
             "id": "remote",
-            "label": "Osnovna kontrola (Daljinski)",
-            "sublabel": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
+            "label": {
+              "bs": "Osnovna kontrola (Daljinski)",
+              "en": "Basic control (Remote)",
+              "de": "Grundsteuerung (Fernbedienung)"
+            },
+            "sublabel": {
+              "bs": "Samo fizički daljinski upravljač, bez app/WiFi funkcija",
+              "en": "Physical remote control only, no app/WiFi features",
+              "de": "Nur physische Fernbedienung, keine App-/WiFi-Funktionen"
+            },
             "price_km": 139,
             "recommended": false,
-            "downgrade_note": "Bez mogućnosti kontrole na daljinu preko telefona"
+            "downgrade_note": {
+              "bs": "Bez mogućnosti kontrole na daljinu preko telefona",
+              "en": "No remote control via phone",
+              "de": "Keine Fernsteuerung per Telefon möglich"
+            }
           }
         ]
       }
@@ -93,51 +197,107 @@
     "addons": [
       {
         "id": "solar-panel",
-        "label": "Solarni punjač",
-        "description": "Automatsko punjenje robota preko sunca — nikad ne brinete o bateriji.",
+        "label": { "bs": "Solarni punjač", "en": "Solar charger", "de": "Solarladegerät" },
+        "description": {
+          "bs": "Automatsko punjenje robota preko sunca — nikad ne brinete o bateriji.",
+          "en": "Automatic solar charging for the robot — never worry about the battery again.",
+          "de": "Automatisches Laden des Roboters über Sonnenenergie — nie wieder Sorgen um den Akku."
+        },
         "price_km": 39,
         "default_checked": false
       }
     ],
     "specs": {
-      "dimensions": "152 x 81 x 75mm",
-      "power": "4W",
-      "battery": "4000mAh, odvojiva, punjenje Type-C",
-      "max_stroke": "20m",
-      "app": "Tuya / Smart Life"
+      "dimensions": { "bs": "152 x 81 x 75mm", "en": "152 x 81 x 75mm", "de": "152 x 81 x 75mm" },
+      "power": { "bs": "4W", "en": "4W", "de": "4W" },
+      "battery": {
+        "bs": "4000mAh, odvojiva, punjenje Type-C",
+        "en": "4000mAh, removable, Type-C charging",
+        "de": "4000mAh, herausnehmbar, Type-C-Ladung"
+      },
+      "max_stroke": { "bs": "20m", "en": "20m", "de": "20m" },
+      "app": { "bs": "Tuya / Smart Life", "en": "Tuya / Smart Life", "de": "Tuya / Smart Life" }
     },
     "images": ["/products/curtain-robot-single/1.png"],
     "status": "preorder",
-    "preorder_note": "Sljedeća grupa narudžbi zatvara se uskoro. Isporuka 10-15 dana nakon slanja iz fabrike."
+    "preorder_note": {
+      "bs": "Sljedeća grupa narudžbi zatvara se uskoro. Isporuka 10-15 dana nakon slanja iz fabrike.",
+      "en": "The next order batch closes soon. Delivery 10-15 days after shipping from the factory.",
+      "de": "Die nächste Bestellcharge schließt bald. Lieferung 10-15 Tage nach Versand ab Werk."
+    }
   },
   {
     "id": "solarni-punjac",
-    "name": "Solarni punjač za Curtain Robot",
-    "tagline": "Nikad ne brinite o bateriji",
-    "short_description": "Automatsko punjenje na sunčevu energiju za Smart Curtain Robot — postavite jednom, zaboravite na punjenje.",
+    "name": {
+      "bs": "Solarni punjač za Curtain Robot",
+      "en": "Solar Charger for Curtain Robot",
+      "de": "Solarladegerät für Curtain Robot"
+    },
+    "tagline": {
+      "bs": "Nikad ne brinite o bateriji",
+      "en": "Never worry about the battery",
+      "de": "Nie wieder Sorgen um den Akku"
+    },
+    "short_description": {
+      "bs": "Automatsko punjenje na sunčevu energiju za Smart Curtain Robot — postavite jednom, zaboravite na punjenje.",
+      "en": "Automatic solar charging for the Smart Curtain Robot — set it up once, forget about charging.",
+      "de": "Automatisches Solarladen für den Smart Curtain Robot — einmal installieren, nie wieder ans Laden denken."
+    },
     "features": [
-      "Kompatibilan sa Smart Curtain Robot (Single i Double)",
-      "Rotacija 180° — uvijek uhvati najviše sunca",
-      "Produživ nosač za fleksibilno postavljanje na prozoru",
-      "Jednostavna montaža, bez alata"
+      {
+        "bs": "Kompatibilan sa Smart Curtain Robot (Single i Double)",
+        "en": "Compatible with Smart Curtain Robot (Single and Double)",
+        "de": "Kompatibel mit Smart Curtain Robot (Single und Double)"
+      },
+      {
+        "bs": "Rotacija 180° — uvijek uhvati najviše sunca",
+        "en": "180° rotation — always catches the most sunlight",
+        "de": "180°-Drehung — fängt immer das meiste Sonnenlicht ein"
+      },
+      {
+        "bs": "Produživ nosač za fleksibilno postavljanje na prozoru",
+        "en": "Extendable mount for flexible window placement",
+        "de": "Ausziehbare Halterung für flexible Montage am Fenster"
+      },
+      {
+        "bs": "Jednostavna montaža, bez alata",
+        "en": "Simple installation, no tools required",
+        "de": "Einfache Montage, kein Werkzeug nötig"
+      }
     ],
     "variant_groups": [
       {
         "id": "tip",
-        "label": "Tip",
+        "label": { "bs": "Tip", "en": "Type", "de": "Typ" },
         "default": "standard",
         "options": [
-          { "id": "standard", "label": "Solarni punjač", "price_km": 39 }
+          {
+            "id": "standard",
+            "label": { "bs": "Solarni punjač", "en": "Solar charger", "de": "Solarladegerät" },
+            "price_km": 39
+          }
         ]
       }
     ],
     "addons": [],
     "specs": {
-      "tip": "Solar Charging Board — rotacija 180°, produživ nosač",
-      "kompatibilnost": "Smart Curtain Robot (Single i Double)"
+      "type": {
+        "bs": "Solar Charging Board — rotacija 180°, produživ nosač",
+        "en": "Solar Charging Board — 180° rotation, extendable mount",
+        "de": "Solar Charging Board — 180°-Drehung, ausziehbare Halterung"
+      },
+      "compatibility": {
+        "bs": "Smart Curtain Robot (Single i Double)",
+        "en": "Smart Curtain Robot (Single and Double)",
+        "de": "Smart Curtain Robot (Single und Double)"
+      }
     },
     "images": ["/products/solar-panel/1.png"],
     "status": "preorder",
-    "preorder_note": "Dostupan uz narudžbu Smart Curtain Robot-a ili samostalno. Isporuka zajedno sa glavnom pošiljkom."
+    "preorder_note": {
+      "bs": "Dostupan uz narudžbu Smart Curtain Robot-a ili samostalno. Isporuka zajedno sa glavnom pošiljkom.",
+      "en": "Available with a Smart Curtain Robot order or on its own. Delivered together with the main shipment.",
+      "de": "Erhältlich zusammen mit einer Smart-Curtain-Robot-Bestellung oder separat. Lieferung zusammen mit der Hauptsendung."
+    }
   }
 ]

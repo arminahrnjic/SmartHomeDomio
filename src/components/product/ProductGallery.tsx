@@ -2,8 +2,19 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { getDictionary } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locales";
 
-export function ProductGallery({ images, alt }: { images: string[]; alt: string }) {
+export function ProductGallery({
+  images,
+  alt,
+  lang,
+}: {
+  images: string[];
+  alt: string;
+  lang: Locale;
+}) {
+  const dict = getDictionary(lang);
   const [active, setActive] = useState(0);
 
   if (images.length === 0) {
@@ -46,7 +57,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
               key={image}
               type="button"
               onClick={() => setActive(index)}
-              aria-label={`Slika ${index + 1}`}
+              aria-label={dict.product.imageAltPattern.replace("{n}", String(index + 1))}
               className={`relative h-20 w-20 overflow-hidden rounded-xl bg-bg-alt transition-opacity ${
                 active === index ? "ring-2 ring-primary" : "opacity-70 hover:opacity-100"
               }`}

@@ -3,8 +3,9 @@ import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import type { CoverTheme } from "@/components/blog/CoverArt";
+import type { Locale } from "@/i18n/locales";
 
-const BLOG_DIR = path.join(process.cwd(), "content", "blog");
+const BLOG_ROOT = path.join(process.cwd(), "content", "blog");
 
 export interface BlogPostMeta {
   slug: string;
@@ -19,22 +20,33 @@ export interface BlogPost extends BlogPostMeta {
   contentHtml: string;
 }
 
-function readSlugs(): string[] {
-  if (!fs.existsSync(BLOG_DIR)) return [];
+const READING_TIME_UNIT: Record<Locale, string> = {
+  bs: "min čitanja",
+  en: "min read",
+  de: "Min. Lesezeit",
+};
+
+function blogDir(locale: Locale): string {
+  return path.join(BLOG_ROOT, locale);
+}
+
+function readSlugs(locale: Locale): string[] {
+  const dir = blogDir(locale);
+  if (!fs.existsSync(dir)) return [];
   return fs
-    .readdirSync(BLOG_DIR)
+    .readdirSync(dir)
     .filter((file) => file.endsWith(".md"))
     .map((file) => file.replace(/\.md$/, ""));
 }
 
-function estimateReadingTime(text: string): string {
+function estimateReadingTime(text: string, locale: Locale): string {
   const words = text.trim().split(/\s+/).length;
   const minutes = Math.max(1, Math.round(words / 180));
-  return `${minutes} min čitanja`;
+  return `${minutes} ${READING_TIME_UNIT[locale]}`;
 }
 
-function readMeta(slug: string): BlogPostMeta | undefined {
-  const filePath = path.join(BLOG_DIR, `${slug}.md`);
+function readMeta(slug: string, locale: Locale): BlogPostMeta | undefined {
+  const filePath = path.join(blogDir(locale), `${slug}.md`);
   if (!fs.existsSync(filePath)) return undefined;
 
   const raw = fs.readFileSync(filePath, "utf8");
@@ -46,22 +58,22 @@ function readMeta(slug: string): BlogPostMeta | undefined {
     excerpt: data.excerpt as string,
     date: data.date as string,
     theme: (data.theme as CoverTheme) ?? "home",
-    readingTime: estimateReadingTime(content),
+    readingTime: estimateReadingTime(content, locale),
   };
 }
 
-export function getAllPosts(): BlogPostMeta[] {
-  return readSlugs()
-    .map((slug) => readMeta(slug))
+export function getAllPosts(locale: Locale): BlogPostMeta[] {
+  return readSlugs(locale)
+    .map((slug) => readMeta(slug, locale))
     .filter((post): post is BlogPostMeta => post !== undefined)
     .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export function getPostBySlug(slug: string): BlogPost | undefined {
-  const filePath = path.join(BLOG_DIR, `${slug}.md`);
+export function getPostBySlug(slug: string, locale: Locale): BlogPost | undefined {
+  const filePath = path.join(blogDir(locale), `${slug}.md`);
   if (!fs.existsSync(filePath)) return undefined;
 
-  const meta = readMeta(slug);
+  const meta = readMeta(slug, locale);
   if (!meta) return undefined;
 
   const raw = fs.readFileSync(filePath, "utf8");

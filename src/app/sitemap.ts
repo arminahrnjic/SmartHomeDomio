@@ -3,31 +3,36 @@ import products from "@data/products.json";
 import type { Product } from "@/types/product";
 import { siteConfig } from "@/config/siteConfig";
 import { getAllPosts } from "@/lib/blog";
+import { locales } from "@/i18n/locales";
 
 const ALL_PRODUCTS = products as unknown as Product[];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes: MetadataRoute.Sitemap = [
-    { url: siteConfig.url, changeFrequency: "weekly", priority: 1 },
-    { url: `${siteConfig.url}/proizvodi`, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${siteConfig.url}/o-nama`, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${siteConfig.url}/blog`, changeFrequency: "weekly", priority: 0.6 },
-    { url: `${siteConfig.url}/uslovi-koristenja`, changeFrequency: "yearly", priority: 0.2 },
-    { url: `${siteConfig.url}/politika-privatnosti`, changeFrequency: "yearly", priority: 0.2 },
-    { url: `${siteConfig.url}/politika-povrata`, changeFrequency: "yearly", priority: 0.2 },
-  ];
+  return locales.flatMap((lang) => {
+    const base = `${siteConfig.url}/${lang}`;
 
-  const productRoutes: MetadataRoute.Sitemap = ALL_PRODUCTS.map((product) => ({
-    url: `${siteConfig.url}/proizvodi/${product.id}`,
-    changeFrequency: "weekly",
-    priority: 0.8,
-  }));
+    const staticRoutes: MetadataRoute.Sitemap = [
+      { url: base, changeFrequency: "weekly", priority: 1 },
+      { url: `${base}/proizvodi`, changeFrequency: "weekly", priority: 0.9 },
+      { url: `${base}/o-nama`, changeFrequency: "monthly", priority: 0.5 },
+      { url: `${base}/blog`, changeFrequency: "weekly", priority: 0.6 },
+      { url: `${base}/uslovi-koristenja`, changeFrequency: "yearly", priority: 0.2 },
+      { url: `${base}/politika-privatnosti`, changeFrequency: "yearly", priority: 0.2 },
+      { url: `${base}/politika-povrata`, changeFrequency: "yearly", priority: 0.2 },
+    ];
 
-  const blogRoutes: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
-    url: `${siteConfig.url}/blog/${post.slug}`,
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }));
+    const productRoutes: MetadataRoute.Sitemap = ALL_PRODUCTS.map((product) => ({
+      url: `${base}/proizvodi/${product.id}`,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    }));
 
-  return [...staticRoutes, ...productRoutes, ...blogRoutes];
+    const blogRoutes: MetadataRoute.Sitemap = getAllPosts(lang).map((post) => ({
+      url: `${base}/blog/${post.slug}`,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    }));
+
+    return [...staticRoutes, ...productRoutes, ...blogRoutes];
+  });
 }
