@@ -62,6 +62,10 @@ export function Footer({ lang }: { lang: Locale }) {
           ))}
         </div>
       </div>
+
+      <p className="mx-auto mt-4 max-w-6xl text-center text-[11px] text-text-muted/70">
+        {dict.footer.portfolioNote}
+      </p>
     </footer>
   );
 }

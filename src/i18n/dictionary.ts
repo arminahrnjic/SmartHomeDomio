@@ -23,6 +23,7 @@ export interface Dictionary {
       privacy: string;
       refund: string;
     };
+    portfolioNote: string;
   };
   announcement: string;
   hero: {
@@ -138,6 +139,8 @@ const bs: Dictionary = {
       privacy: "Politika privatnosti",
       refund: "Preorder i povrat",
     },
+    portfolioNote:
+      "Ovo je demo/portfolio projekat — Domio trenutno ne postoji kao stvarna kompanija.",
   },
   announcement: "Besplatna dostava u BiH · 2 godine garancije",
   hero: {
@@ -280,6 +283,8 @@ const en: Dictionary = {
       privacy: "Privacy policy",
       refund: "Preorder & refunds",
     },
+    portfolioNote:
+      "This is a demo/portfolio project — Domio doesn't currently exist as a real company.",
   },
   announcement: "Free shipping in BiH · 2-year warranty",
   hero: {
@@ -422,6 +427,8 @@ const de: Dictionary = {
       privacy: "Datenschutzerklärung",
       refund: "Vorbestellung & Rückgabe",
     },
+    portfolioNote:
+      "Dies ist ein Demo-/Portfolio-Projekt — Domio existiert derzeit nicht als echtes Unternehmen.",
   },
   announcement: "Kostenloser Versand in BiH · 2 Jahre Garantie",
   hero: {
