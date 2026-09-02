@@ -12,6 +12,8 @@ export interface Dictionary {
   };
   header: {
     cartAria: string;
+    menuAria: string;
+    closeMenuAria: string;
   };
   footer: {
     company: string;
@@ -128,7 +130,7 @@ const bs: Dictionary = {
       "Pametni uređaji za dom — kontrolišite rasvjetu, zavjese i sigurnost odakle god se nalazite.",
   },
   nav: { products: "Proizvodi", about: "O nama", blog: "Blog" },
-  header: { cartAria: "Korpa" },
+  header: { cartAria: "Korpa", menuAria: "Meni", closeMenuAria: "Zatvori meni" },
   footer: {
     company: "Kompanija",
     productsCol: "Proizvodi",
@@ -272,7 +274,7 @@ const en: Dictionary = {
       "Smart home devices — control lighting, curtains and security from wherever you are.",
   },
   nav: { products: "Products", about: "About", blog: "Blog" },
-  header: { cartAria: "Cart" },
+  header: { cartAria: "Cart", menuAria: "Menu", closeMenuAria: "Close menu" },
   footer: {
     company: "Company",
     productsCol: "Products",
@@ -416,7 +418,7 @@ const de: Dictionary = {
       "Smarte Geräte für Ihr Zuhause — steuern Sie Beleuchtung, Vorhänge und Sicherheit von überall.",
   },
   nav: { products: "Produkte", about: "Über uns", blog: "Blog" },
-  header: { cartAria: "Warenkorb" },
+  header: { cartAria: "Warenkorb", menuAria: "Menü", closeMenuAria: "Menü schließen" },
   footer: {
     company: "Unternehmen",
     productsCol: "Produkte",
