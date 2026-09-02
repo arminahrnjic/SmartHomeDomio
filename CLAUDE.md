@@ -26,9 +26,12 @@ Koncept: **Apple × Tesla × Dyson.** Premium, minimalistički, mnogo negativnog
 - Kopija (copy) je kratka, samopouzdana, u drugom licu ("Vaš dom", "Kontrolišite", ne "Mi nudimo...")
 
 **Boje:**
+
+> Zatamnjeno 2026-08-28 (bilo `#1E8E6A` / `#157255`) — accessibility test suite (`src/tests/accessibility`) je otkrio da originalna nijansa ne prolazi WCAG AA kontrast (4.5:1) na bijeloj pozadini (bila ~4.09:1) za CTA dugmad i zelene linkove/bedževe. Nova vrijednost prolazi sa ~4.9:1, i dalje ista "porodica" smaragdno zelene.
+
 ```
---color-primary: #1E8E6A;   /* smaragdno zelena — akcenat, CTA dugmad */
---color-primary-hover: #157255;
+--color-primary: #17805F;   /* smaragdno zelena — akcenat, CTA dugmad */
+--color-primary-hover: #12664C;
 --color-bg: #FFFFFF;
 --color-bg-alt: #F8F9FA;    /* alternativne sekcije */
 --color-text: #222222;

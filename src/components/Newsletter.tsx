@@ -27,7 +27,9 @@ export function Newsletter({ lang }: { lang: Locale }) {
         <h2 className="text-[clamp(1.8rem,3vw,2.8rem)] font-bold tracking-tight text-white">
           {dict.newsletter.heading}
         </h2>
-        <p className="text-base text-white/85">{dict.newsletter.subheading}</p>
+        {/* puna bijela, ne /85 — smanjena opacity je spuštala kontrast na primary pozadini
+            ispod WCAG AA 4.5:1 (otkriveno accessibility test suite-om 2026-08-28) */}
+        <p className="text-base text-white">{dict.newsletter.subheading}</p>
 
         {status === "success" ? (
           <p className="text-base font-medium text-white">{dict.newsletter.success}</p>

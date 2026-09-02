@@ -63,7 +63,9 @@ export function Footer({ lang }: { lang: Locale }) {
         </div>
       </div>
 
-      <p className="mx-auto mt-4 max-w-6xl text-center text-[11px] text-text-muted/70">
+      {/* text-text-muted (bez /70 opacity) — 70% opacity je spuštala kontrast na 2.92:1,
+          ispod WCAG AA praga od 4.5:1 (otkriveno accessibility test suite-om 2026-08-28). */}
+      <p className="mx-auto mt-4 max-w-6xl text-center text-[11px] text-text-muted">
         {dict.footer.portfolioNote}
       </p>
     </footer>

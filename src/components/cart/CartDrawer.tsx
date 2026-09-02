@@ -80,7 +80,12 @@ export function CartDrawer({ lang }: { lang: Locale }) {
 
   return (
     <div
-      aria-hidden={!isOpen}
+      // `inert` (ne aria-hidden) — kad je korpa zatvorena, cijeli drawer ostaje montiran u DOM-u
+      // (vidi komentar iznad) ali sadrži fokusabilne elemente (dugme za zatvaranje, linkove).
+      // aria-hidden na kontejneru sa fokusabilnom djecom je WCAG 4.1.2 greška (aria-hidden-focus)
+      // jer tastatura i dalje može doći do njih iako su vizuelno/za AT sakriveni. inert i vizuelno
+      // sakriva iz accessibility stabla i uklanja iz tab reda/klika u isto vrijeme.
+      inert={!isOpen}
       className={`fixed inset-0 z-[60] ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
     >
       <div
@@ -188,7 +193,7 @@ export function CartDrawer({ lang }: { lang: Locale }) {
                               +
                             </button>
                           </div>
-                          <span className="text-sm font-semibold text-text">
+                          <span data-testid="cart-line-total" className="text-sm font-semibold text-text">
                             {formatPrice(item.unitPrice * item.quantity, lang)}
                           </span>
                         </div>
@@ -202,7 +207,7 @@ export function CartDrawer({ lang }: { lang: Locale }) {
             <div className="flex flex-col gap-4 border-t border-border px-6 py-5">
               <div className="flex items-baseline justify-between">
                 <span className="text-sm text-text-muted">{dict.cart.subtotal}</span>
-                <span className="text-2xl font-bold tracking-tight text-text">
+                <span data-testid="cart-subtotal" className="text-2xl font-bold tracking-tight text-text">
                   {formatPrice(totalPrice, lang)}
                 </span>
               </div>

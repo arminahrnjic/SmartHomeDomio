@@ -130,8 +130,11 @@ export function VariantSelector({
                       <span className="text-xs text-text-muted">{t(option.sublabel, lang)}</span>
                     )}
                     <span className="mt-1 text-sm font-medium text-text">{priceLabel}</span>
+                    {/* text-text-muted, ne /80 — smanjena opacity je spuštala kontrast
+                        ispod WCAG AA 4.5:1 na 12px tekstu (otkriveno accessibility
+                        test suite-om 2026-08-28) */}
                     {!isRecommended && groupHasRecommended && option.downgrade_note && (
-                      <span className="text-xs text-text-muted/80">
+                      <span className="text-xs text-text-muted">
                         {t(option.downgrade_note, lang)}
                       </span>
                     )}
@@ -178,7 +181,7 @@ export function VariantSelector({
             <span className="text-sm text-text-muted">
               {quantity > 1 ? dict.product.total : dict.product.pricePerUnit}
             </span>
-            <span className="text-3xl font-bold tracking-tight text-text">
+            <span data-testid="product-total-price" className="text-3xl font-bold tracking-tight text-text">
               {formatPrice(unitPrice * quantity, lang)}
             </span>
           </div>

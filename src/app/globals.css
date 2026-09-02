@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #1e8e6a;
-  --color-primary-hover: #157255;
+  /* Zatamnjeno 2026-08-28 sa #1e8e6a -> #17805f (WCAG AA, vidi CLAUDE.md "Boje") jer
+     accessibility test suite (src/tests/accessibility) je otkrio da originalna nijansa
+     ne prolazi 4.5:1 kontrast (bila je ~4.09:1) za bijeli tekst na CTA dugmadima i za
+     zelene linkove/bedževe na bijeloj pozadini. Nova vrijednost je ~4.9:1. */
+  --color-primary: #17805f;
+  --color-primary-hover: #12664c;
   --color-bg: #ffffff;
   --color-bg-alt: #f8f9fa;
   --color-text: #222222;
@@ -39,6 +43,30 @@ body {
 
 .animate-fade-in-up {
   animation: fade-in-up 0.8s ease-out both;
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.18s ease-out both;
+}
+
+/* Next.js accessibility guidance: respect prefers-reduced-motion for animations. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in-down {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
 }
 
 .prose-domio h2 {
